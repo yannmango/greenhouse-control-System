@@ -1,0 +1,39 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/2.jpg</file>
+        <file>images/3.jpg</file>
+        <file>images/4.jpg</file>
+        <file>images/5.jpg</file>
+        <file>images/about.png</file>
+        <file>images/about_us_bg.png</file>
+        <file>images/about_us_bg_1.png</file>
+        <file>images/about_us_bg_2.png</file>
+        <file>images/aboutus.png</file>
+        <file>images/alarm.jpg</file>
+        <file>images/background.jpg</file>
+        <file>images/big_light_on.jpg</file>
+        <file>images/btn_ok.png</file>
+        <file>images/door.jpg</file>
+        <file>images/exit.png</file>
+        <file>images/exit1.png</file>
+        <file>images/fog_1.png</file>
+        <file>images/fog_2.png</file>
+        <file>images/fog_3.png</file>
+        <file>images/gray1.png</file>
+        <file>images/gray2.png</file>
+        <file>images/gray3.png</file>
+        <file>images/gray4.png</file>
+        <file>images/logo.jpg</file>
+        <file>images/logo1.jpg</file>
+        <file>images/night.jpg</file>
+        <file>images/password.png</file>
+        <file>images/port_setting_bg.png</file>
+        <file>images/settings.png</file>
+        <file>images/sign_out_in.png</file>
+        <file>images/temAndhum_bg.png</file>
+        <file>images/temAndhum_bg_1.png</file>
+        <file>images/w1.png</file>
+        <file>images/w2.png</file>
+        <file>images/w3.png</file>
+    </qresource>
+</RCC>
