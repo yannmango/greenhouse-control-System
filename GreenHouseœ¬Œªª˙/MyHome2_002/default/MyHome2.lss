@@ -1,0 +1,1607 @@
+
+MyHome2.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000008  00800100  000005e0  00000674  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         000005e0  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          00000034  00800108  00800108  0000067c  2**0
+                  ALLOC
+  3 .debug_aranges 00000140  00000000  00000000  0000067c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_pubnames 00000286  00000000  00000000  000007bc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00001248  00000000  00000000  00000a42  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000008c9  00000000  00000000  00001c8a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000010c9  00000000  00000000  00002553  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000230  00000000  00000000  0000361c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000002f5  00000000  00000000  0000384c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    0000051c  00000000  00000000  00003b41  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000210  00000000  00000000  0000405d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 38 00 	jmp	0x70	; 0x70 <__ctors_end>
+   4:	0c 94 55 00 	jmp	0xaa	; 0xaa <__bad_interrupt>
+   8:	0c 94 55 00 	jmp	0xaa	; 0xaa <__bad_interrupt>
+   c:	0c 94 55 00 	jmp	0xaa	; 0xaa <__bad_interrupt>
+  10:	0c 94 55 00 	jmp	0xaa	; 0xaa <__bad_interrupt>
+  14:	0c 94 55 00 	jmp	0xaa	; 0xaa <__bad_interrupt>
+  18:	0c 94 55 00 	jmp	0xaa	; 0xaa <__bad_interrupt>
+  1c:	0c 94 55 00 	jmp	0xaa	; 0xaa <__bad_interrupt>
+  20:	0c 94 55 00 	jmp	0xaa	; 0xaa <__bad_interrupt>
+  24:	0c 94 55 00 	jmp	0xaa	; 0xaa <__bad_interrupt>
+  28:	0c 94 55 00 	jmp	0xaa	; 0xaa <__bad_interrupt>
+  2c:	0c 94 55 00 	jmp	0xaa	; 0xaa <__bad_interrupt>
+  30:	0c 94 55 00 	jmp	0xaa	; 0xaa <__bad_interrupt>
+  34:	0c 94 55 00 	jmp	0xaa	; 0xaa <__bad_interrupt>
+  38:	0c 94 55 00 	jmp	0xaa	; 0xaa <__bad_interrupt>
+  3c:	0c 94 55 00 	jmp	0xaa	; 0xaa <__bad_interrupt>
+  40:	0c 94 55 00 	jmp	0xaa	; 0xaa <__bad_interrupt>
+  44:	0c 94 55 00 	jmp	0xaa	; 0xaa <__bad_interrupt>
+  48:	0c 94 55 00 	jmp	0xaa	; 0xaa <__bad_interrupt>
+  4c:	0c 94 16 01 	jmp	0x22c	; 0x22c <__vector_19>
+  50:	0c 94 55 00 	jmp	0xaa	; 0xaa <__bad_interrupt>
+  54:	0c 94 38 01 	jmp	0x270	; 0x270 <__vector_21>
+  58:	0c 94 55 00 	jmp	0xaa	; 0xaa <__bad_interrupt>
+  5c:	0c 94 55 00 	jmp	0xaa	; 0xaa <__bad_interrupt>
+  60:	0c 94 55 00 	jmp	0xaa	; 0xaa <__bad_interrupt>
+  64:	0c 94 55 00 	jmp	0xaa	; 0xaa <__bad_interrupt>
+  68:	0c 94 55 00 	jmp	0xaa	; 0xaa <__bad_interrupt>
+  6c:	0c 94 55 00 	jmp	0xaa	; 0xaa <__bad_interrupt>
+
+00000070 <__ctors_end>:
+  70:	11 24       	eor	r1, r1
+  72:	1f be       	out	0x3f, r1	; 63
+  74:	cf ef       	ldi	r28, 0xFF	; 255
+  76:	d4 e0       	ldi	r29, 0x04	; 4
+  78:	de bf       	out	0x3e, r29	; 62
+  7a:	cd bf       	out	0x3d, r28	; 61
+
+0000007c <__do_copy_data>:
+  7c:	11 e0       	ldi	r17, 0x01	; 1
+  7e:	a0 e0       	ldi	r26, 0x00	; 0
+  80:	b1 e0       	ldi	r27, 0x01	; 1
+  82:	e0 ee       	ldi	r30, 0xE0	; 224
+  84:	f5 e0       	ldi	r31, 0x05	; 5
+  86:	02 c0       	rjmp	.+4      	; 0x8c <.do_copy_data_start>
+
+00000088 <.do_copy_data_loop>:
+  88:	05 90       	lpm	r0, Z+
+  8a:	0d 92       	st	X+, r0
+
+0000008c <.do_copy_data_start>:
+  8c:	a8 30       	cpi	r26, 0x08	; 8
+  8e:	b1 07       	cpc	r27, r17
+  90:	d9 f7       	brne	.-10     	; 0x88 <.do_copy_data_loop>
+
+00000092 <__do_clear_bss>:
+  92:	11 e0       	ldi	r17, 0x01	; 1
+  94:	a8 e0       	ldi	r26, 0x08	; 8
+  96:	b1 e0       	ldi	r27, 0x01	; 1
+  98:	01 c0       	rjmp	.+2      	; 0x9c <.do_clear_bss_start>
+
+0000009a <.do_clear_bss_loop>:
+  9a:	1d 92       	st	X+, r1
+
+0000009c <.do_clear_bss_start>:
+  9c:	ac 33       	cpi	r26, 0x3C	; 60
+  9e:	b1 07       	cpc	r27, r17
+  a0:	e1 f7       	brne	.-8      	; 0x9a <.do_clear_bss_loop>
+  a2:	0e 94 57 00 	call	0xae	; 0xae <main>
+  a6:	0c 94 ee 02 	jmp	0x5dc	; 0x5dc <_exit>
+
+000000aa <__bad_interrupt>:
+  aa:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+000000ae <main>:
+uchar CMD;
+
+uchar led_count = 0;
+extern uint8	hum_h;
+
+int main(void){
+  ae:	0f 93       	push	r16
+  b0:	1f 93       	push	r17
+	
+	CLKPR = (1<<CLKPCE);
+  b2:	80 e8       	ldi	r24, 0x80	; 128
+  b4:	80 93 61 00 	sts	0x0061, r24
+	CLKPR = 0x00;
+  b8:	10 92 61 00 	sts	0x0061, r1
+	DDRA  = 0xFF;
+  bc:	8f ef       	ldi	r24, 0xFF	; 255
+  be:	8a bb       	out	0x1a, r24	; 26
+ 
+	usart_init(  ); 
+  c0:	0e 94 05 01 	call	0x20a	; 0x20a <usart_init>
+	//全局中断使能
+    sei(); 
+  c4:	78 94       	sei
+		if(TEM == CMD){   //温度       #define TEM                0x31          成功 十六进制显示 需要乘以 0.5
+
+	        uchar temp=0;			
+            temp=temperature_lm75();
+ 
+            frame[FRAME_HEAD] = 0xF8;
+  c6:	08 ef       	ldi	r16, 0xF8	; 248
+    sei(); 
+	
+ 
+	while(1){
+
+		CMD = getch();//
+  c8:	0e 94 5d 01 	call	0x2ba	; 0x2ba <getch>
+  cc:	18 2f       	mov	r17, r24
+  ce:	80 93 2e 01 	sts	0x012E, r24
+	    
+         */
+
+
+
+		if(TEM == CMD){   //温度       #define TEM                0x31          成功 十六进制显示 需要乘以 0.5
+  d2:	81 33       	cpi	r24, 0x31	; 49
+  d4:	01 f1       	breq	.+64     	; 0x116 <main+0x68>
+
+			putframe(frame);
+
+		}
+
+		else if(DHT  == CMD){     //温湿度——湿度      #define DHT1_TEM           0x32          //似乎准确的
+  d6:	82 33       	cpi	r24, 0x32	; 50
+  d8:	89 f1       	breq	.+98     	; 0x13c <main+0x8e>
+
+			putframe(frame);
+		
+		}
+
+		else if(VIB == CMD){  //震动传感器      #define VIB                0x33         成功
+  da:	83 33       	cpi	r24, 0x33	; 51
+  dc:	c1 f1       	breq	.+112    	; 0x14e <main+0xa0>
+
+			putframe(frame);
+ 
+		}
+
+		else if(INF == CMD){   //热源红外        #define INF                0x34       灵敏度有点拿捏不准 弃用
+  de:	84 33       	cpi	r24, 0x34	; 52
+  e0:	e9 f1       	breq	.+122    	; 0x15c <main+0xae>
+
+			putframe(frame);
+		
+		}
+
+		else if(LIGHT == CMD){  //光敏         #define LIGHT              0x35      灵敏度已调好
+  e2:	85 33       	cpi	r24, 0x35	; 53
+  e4:	09 f4       	brne	.+2      	; 0xe8 <main+0x3a>
+  e6:	41 c0       	rjmp	.+130    	; 0x16a <main+0xbc>
+			frame[FRAME_CHECK] = check(frame);
+
+			putframe(frame);
+		
+		}
+		else if(BELL == CMD){   //蜂鸣器        #define BELL               0x36                       //成功
+  e8:	86 33       	cpi	r24, 0x36	; 54
+  ea:	09 f4       	brne	.+2      	; 0xee <main+0x40>
+  ec:	45 c0       	rjmp	.+138    	; 0x178 <main+0xca>
+
+				bell(1);
+		
+		}
+
+		else if(MOTOR_SHUN == CMD){  //电机顺时针转      #define MOTOR_SHUN         0x37                 //成功
+  ee:	87 33       	cpi	r24, 0x37	; 55
+  f0:	09 f4       	brne	.+2      	; 0xf4 <main+0x46>
+  f2:	47 c0       	rjmp	.+142    	; 0x182 <main+0xd4>
+	
+			motor_shun(MOTOR_SHUN);
+		        		
+		}
+
+		else if(MOTOR_NI == CMD){    //电机逆时针转       #define MOTOR_NI           0x38              //成功
+  f4:	88 33       	cpi	r24, 0x38	; 56
+  f6:	09 f4       	brne	.+2      	; 0xfa <main+0x4c>
+  f8:	49 c0       	rjmp	.+146    	; 0x18c <main+0xde>
+			
+			motor_ni(MOTOR_NI);
+
+		}
+
+        else if(LED == CMD){       //流水灯闪烁          #define LED                0x39            //成功
+  fa:	89 33       	cpi	r24, 0x39	; 57
+  fc:	29 f7       	brne	.-54     	; 0xc8 <main+0x1a>
+			 if(led_count==8)
+			 {
+			    led_count=0;
+			 } */
+
+             led_test(led_count);
+  fe:	80 91 08 01 	lds	r24, 0x0108
+ 102:	90 e0       	ldi	r25, 0x00	; 0
+ 104:	0e 94 76 02 	call	0x4ec	; 0x4ec <led_test>
+    sei(); 
+	
+ 
+	while(1){
+
+		CMD = getch();//
+ 108:	0e 94 5d 01 	call	0x2ba	; 0x2ba <getch>
+ 10c:	18 2f       	mov	r17, r24
+ 10e:	80 93 2e 01 	sts	0x012E, r24
+	    
+         */
+
+
+
+		if(TEM == CMD){   //温度       #define TEM                0x31          成功 十六进制显示 需要乘以 0.5
+ 112:	81 33       	cpi	r24, 0x31	; 49
+ 114:	01 f7       	brne	.-64     	; 0xd6 <main+0x28>
+
+	        uchar temp=0;			
+            temp=temperature_lm75();
+ 116:	0e 94 43 02 	call	0x486	; 0x486 <temperature_lm75>
+ 
+            frame[FRAME_HEAD] = 0xF8;
+ 11a:	00 93 2f 01 	sts	0x012F, r16
+            frame[FRAME_SENSORID] = TEM;
+ 11e:	10 93 30 01 	sts	0x0130, r17
+           
+            get_DHT11_value();
+			
+			frame[FRAME_HEAD] = 0xF8;
+            frame[FRAME_SENSORID] = DHT;
+			frame[FRAME_DATA_1] = hum_h;
+ 122:	80 93 31 01 	sts	0x0131, r24
+			frame[FRAME_CHECK] = check(frame);
+ 126:	8f e2       	ldi	r24, 0x2F	; 47
+ 128:	91 e0       	ldi	r25, 0x01	; 1
+ 12a:	0e 94 96 01 	call	0x32c	; 0x32c <check>
+ 12e:	80 93 32 01 	sts	0x0132, r24
+
+			putframe(frame);
+ 132:	8f e2       	ldi	r24, 0x2F	; 47
+ 134:	91 e0       	ldi	r25, 0x01	; 1
+ 136:	0e 94 80 01 	call	0x300	; 0x300 <putframe>
+ 13a:	c6 cf       	rjmp	.-116    	; 0xc8 <main+0x1a>
+		}
+
+		else if(DHT  == CMD){     //温湿度——湿度      #define DHT1_TEM           0x32          //似乎准确的
+		
+           
+            get_DHT11_value();
+ 13c:	0e 94 7e 02 	call	0x4fc	; 0x4fc <get_DHT11_value>
+			
+			frame[FRAME_HEAD] = 0xF8;
+ 140:	00 93 2f 01 	sts	0x012F, r16
+            frame[FRAME_SENSORID] = DHT;
+ 144:	10 93 30 01 	sts	0x0130, r17
+			frame[FRAME_DATA_1] = hum_h;
+ 148:	80 91 2d 01 	lds	r24, 0x012D
+ 14c:	ea cf       	rjmp	.-44     	; 0x122 <main+0x74>
+		
+		}
+
+		else if(VIB == CMD){  //震动传感器      #define VIB                0x33         成功
+
+            frame[FRAME_HEAD] = 0xF8;
+ 14e:	00 93 2f 01 	sts	0x012F, r16
+            frame[FRAME_SENSORID] = VIB;
+ 152:	80 93 30 01 	sts	0x0130, r24
+			frame[FRAME_DATA_1] = get_vib();
+ 156:	0e 94 68 02 	call	0x4d0	; 0x4d0 <get_vib>
+ 15a:	e3 cf       	rjmp	.-58     	; 0x122 <main+0x74>
+ 
+		}
+
+		else if(INF == CMD){   //热源红外        #define INF                0x34       灵敏度有点拿捏不准 弃用
+
+            frame[FRAME_HEAD] = 0xF8;
+ 15c:	00 93 2f 01 	sts	0x012F, r16
+			frame[FRAME_SENSORID] = INF;
+ 160:	80 93 30 01 	sts	0x0130, r24
+			frame[FRAME_DATA_1] = get_inf();
+ 164:	0e 94 f7 00 	call	0x1ee	; 0x1ee <get_inf>
+ 168:	dc cf       	rjmp	.-72     	; 0x122 <main+0x74>
+		
+		}
+
+		else if(LIGHT == CMD){  //光敏         #define LIGHT              0x35      灵敏度已调好
+
+            frame[FRAME_HEAD] = 0xF8;
+ 16a:	00 93 2f 01 	sts	0x012F, r16
+            frame[FRAME_SENSORID] = LIGHT;
+ 16e:	80 93 30 01 	sts	0x0130, r24
+			frame[FRAME_DATA_1] = get_light();
+ 172:	0e 94 9d 01 	call	0x33a	; 0x33a <get_light>
+ 176:	d5 cf       	rjmp	.-86     	; 0x122 <main+0x74>
+			putframe(frame);
+		
+		}
+		else if(BELL == CMD){   //蜂鸣器        #define BELL               0x36                       //成功
+
+				bell(1);
+ 178:	81 e0       	ldi	r24, 0x01	; 1
+ 17a:	90 e0       	ldi	r25, 0x00	; 0
+ 17c:	0e 94 cb 00 	call	0x196	; 0x196 <bell>
+ 180:	a3 cf       	rjmp	.-186    	; 0xc8 <main+0x1a>
+		}
+
+		else if(MOTOR_SHUN == CMD){  //电机顺时针转      #define MOTOR_SHUN         0x37                 //成功
+			
+	
+			motor_shun(MOTOR_SHUN);
+ 182:	87 e3       	ldi	r24, 0x37	; 55
+ 184:	90 e0       	ldi	r25, 0x00	; 0
+ 186:	0e 94 aa 01 	call	0x354	; 0x354 <motor_shun>
+ 18a:	9e cf       	rjmp	.-196    	; 0xc8 <main+0x1a>
+		        		
+		}
+
+		else if(MOTOR_NI == CMD){    //电机逆时针转       #define MOTOR_NI           0x38              //成功
+			
+			motor_ni(MOTOR_NI);
+ 18c:	88 e3       	ldi	r24, 0x38	; 56
+ 18e:	90 e0       	ldi	r25, 0x00	; 0
+ 190:	0e 94 c6 01 	call	0x38c	; 0x38c <motor_ni>
+ 194:	99 cf       	rjmp	.-206    	; 0xc8 <main+0x1a>
+
+00000196 <bell>:
+/***************************蜂鸣器*****************************/
+
+void 	bell(uint n)//蜂鸣器连续发声
+{
+    int i;
+	SETBIT(DDRD, BELL_BUS); //设置为输出模式
+ 196:	8b 9a       	sbi	0x11, 3	; 17
+    cli();
+ 198:	f8 94       	cli
+    milliseconds can be achieved.
+ */
+void
+_delay_loop_2(uint16_t __count)
+{
+	__asm__ volatile (
+ 19a:	48 ec       	ldi	r20, 0xC8	; 200
+ 19c:	50 e0       	ldi	r21, 0x00	; 0
+	while(n--) 
+ 19e:	00 97       	sbiw	r24, 0x00	; 0
+ 1a0:	19 f1       	breq	.+70     	; 0x1e8 <bell+0x52>
+ 1a2:	20 ed       	ldi	r18, 0xD0	; 208
+ 1a4:	37 e0       	ldi	r19, 0x07	; 7
+ 1a6:	fa 01       	movw	r30, r20
+ 1a8:	31 97       	sbiw	r30, 0x01	; 1
+ 1aa:	f1 f7       	brne	.-4      	; 0x1a8 <bell+0x12>
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+ 1ac:	21 50       	subi	r18, 0x01	; 1
+ 1ae:	30 40       	sbci	r19, 0x00	; 0
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+ 1b0:	d1 f7       	brne	.-12     	; 0x1a6 <bell+0x10>
+ 1b2:	60 e0       	ldi	r22, 0x00	; 0
+ 1b4:	70 e0       	ldi	r23, 0x00	; 0
+	{
+        _delay_ms(200);
+		for(i=0;i<10;i++)
+ 1b6:	28 ee       	ldi	r18, 0xE8	; 232
+ 1b8:	33 e0       	ldi	r19, 0x03	; 3
+ 1ba:	fa 01       	movw	r30, r20
+ 1bc:	31 97       	sbiw	r30, 0x01	; 1
+ 1be:	f1 f7       	brne	.-4      	; 0x1bc <bell+0x26>
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+ 1c0:	21 50       	subi	r18, 0x01	; 1
+ 1c2:	30 40       	sbci	r19, 0x00	; 0
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+ 1c4:	d1 f7       	brne	.-12     	; 0x1ba <bell+0x24>
+		{  
+		   _delay_ms(100);
+		   SETBIT(PORTD, BELL_BUS);
+ 1c6:	93 9a       	sbi	0x12, 3	; 18
+ 1c8:	28 ee       	ldi	r18, 0xE8	; 232
+ 1ca:	33 e0       	ldi	r19, 0x03	; 3
+ 1cc:	fa 01       	movw	r30, r20
+ 1ce:	31 97       	sbiw	r30, 0x01	; 1
+ 1d0:	f1 f7       	brne	.-4      	; 0x1ce <bell+0x38>
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+ 1d2:	21 50       	subi	r18, 0x01	; 1
+ 1d4:	30 40       	sbci	r19, 0x00	; 0
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+ 1d6:	d1 f7       	brne	.-12     	; 0x1cc <bell+0x36>
+		   _delay_ms(100);
+		   CLRBIT(PORTD, BELL_BUS);
+ 1d8:	93 98       	cbi	0x12, 3	; 18
+	SETBIT(DDRD, BELL_BUS); //设置为输出模式
+    cli();
+	while(n--) 
+	{
+        _delay_ms(200);
+		for(i=0;i<10;i++)
+ 1da:	6f 5f       	subi	r22, 0xFF	; 255
+ 1dc:	7f 4f       	sbci	r23, 0xFF	; 255
+ 1de:	6a 30       	cpi	r22, 0x0A	; 10
+ 1e0:	71 05       	cpc	r23, r1
+ 1e2:	49 f7       	brne	.-46     	; 0x1b6 <bell+0x20>
+ 1e4:	01 97       	sbiw	r24, 0x01	; 1
+void 	bell(uint n)//蜂鸣器连续发声
+{
+    int i;
+	SETBIT(DDRD, BELL_BUS); //设置为输出模式
+    cli();
+	while(n--) 
+ 1e6:	e9 f6       	brne	.-70     	; 0x1a2 <bell+0xc>
+		   CLRBIT(PORTD, BELL_BUS);
+		 }
+
+		//_delay_ms(300);
+	}
+	CLRBIT(PORTD, BELL_BUS); //关闭蜂鸣器
+ 1e8:	93 98       	cbi	0x12, 3	; 18
+	sei();
+ 1ea:	78 94       	sei
+}
+ 1ec:	08 95       	ret
+
+000001ee <get_inf>:
+
+
+unsigned char get_inf(void)//获取红外传感器数据
+{
+ 	
+	CLRBIT(DDRB, INF_BUS);
+ 1ee:	bc 98       	cbi	0x17, 4	; 23
+ 1f0:	80 e6       	ldi	r24, 0x60	; 96
+ 1f2:	9a ee       	ldi	r25, 0xEA	; 234
+ 1f4:	01 97       	sbiw	r24, 0x01	; 1
+ 1f6:	f1 f7       	brne	.-4      	; 0x1f4 <get_inf+0x6>
+	_delay_ms(30);
+
+	if(GETBIT(PINB, INF_BUS))
+ 1f8:	86 b3       	in	r24, 0x16	; 22
+ 1fa:	82 95       	swap	r24
+ 1fc:	8f 70       	andi	r24, 0x0F	; 15
+ 1fe:	80 fd       	sbrc	r24, 0
+ 200:	02 c0       	rjmp	.+4      	; 0x206 <get_inf+0x18>
+ 202:	81 e1       	ldi	r24, 0x11	; 17
+ 204:	08 95       	ret
+ 206:	8f ef       	ldi	r24, 0xFF	; 255
+	   return 0xFF;
+	else 
+	   return 0x11;
+}
+ 208:	08 95       	ret
+
+0000020a <usart_init>:
+ * 提示说明：需要设置串口开中断，包括接收中断和发送中断
+ * *****************************************************************/
+void usart_init( void )
+{
+    uchar x;
+    UCSR0A=0x00;			//单倍速模式
+ 20a:	1b b8       	out	0x0b, r1	; 11
+	UCSR0B=0xD8;			//接收中断和发送中断使能、接收使能和发送使能
+ 20c:	88 ed       	ldi	r24, 0xD8	; 216
+ 20e:	8a b9       	out	0x0a, r24	; 10
+	UCSR0C=0x86;
+ 210:	86 e8       	ldi	r24, 0x86	; 134
+ 212:	80 bd       	out	0x20, r24	; 32
+				//异步通信无校验，8位数据位和1位停止位
+	//初始化缓冲区
+	UBRR0H=baud_h;
+ 214:	10 bc       	out	0x20, r1	; 32
+	UBRR0L=baud_l;
+ 216:	83 e3       	ldi	r24, 0x33	; 51
+ 218:	89 b9       	out	0x09, r24	; 9
+	
+	//初始化缓冲区
+    x = 0; 
+    UART_RxTail = x;
+ 21a:	10 92 1a 01 	sts	0x011A, r1
+    UART_RxHead = x;
+ 21e:	10 92 19 01 	sts	0x0119, r1
+    UART_TxTail = x;
+ 222:	10 92 2c 01 	sts	0x012C, r1
+    UART_TxHead = x;
+ 226:	10 92 2b 01 	sts	0x012B, r1
+}
+ 22a:	08 95       	ret
+
+0000022c <__vector_19>:
+/********************************************************************
+ * 函数功能：串口接收中断处理函数
+ * 注意事项：
+ * *****************************************************************/
+ISR(USART0_RXC_vect)
+{
+ 22c:	1f 92       	push	r1
+ 22e:	0f 92       	push	r0
+ 230:	0f b6       	in	r0, 0x3f	; 63
+ 232:	0f 92       	push	r0
+ 234:	11 24       	eor	r1, r1
+ 236:	2f 93       	push	r18
+ 238:	8f 93       	push	r24
+ 23a:	9f 93       	push	r25
+ 23c:	ef 93       	push	r30
+ 23e:	ff 93       	push	r31
+    uchar data;
+    uchar tmphead;
+    data = UDR0; //读取串口接收寄存器中收到的数据
+ 240:	9c b1       	in	r25, 0x0c	; 12
+	
+    tmphead = ( UART_RxHead + 1 ) & UART_RX_BUFFER_MASK;//计算缓冲区偏移量,不超过UART_RX_BUFFER_MASK
+ 242:	80 91 19 01 	lds	r24, 0x0119
+ 246:	8f 5f       	subi	r24, 0xFF	; 255
+ 248:	8f 70       	andi	r24, 0x0F	; 15
+    UART_RxHead = tmphead; //设置新的偏移量
+ 24a:	80 93 19 01 	sts	0x0119, r24
+    if ( tmphead == UART_RxTail ) {
+ 24e:	20 91 1a 01 	lds	r18, 0x011A
+		//错误：缓冲区溢出
+    }
+    UART_RxBuf[tmphead] = data; //将读到数据写入缓冲区 
+ 252:	e9 e0       	ldi	r30, 0x09	; 9
+ 254:	f1 e0       	ldi	r31, 0x01	; 1
+ 256:	e8 0f       	add	r30, r24
+ 258:	f1 1d       	adc	r31, r1
+ 25a:	90 83       	st	Z, r25
+}
+ 25c:	ff 91       	pop	r31
+ 25e:	ef 91       	pop	r30
+ 260:	9f 91       	pop	r25
+ 262:	8f 91       	pop	r24
+ 264:	2f 91       	pop	r18
+ 266:	0f 90       	pop	r0
+ 268:	0f be       	out	0x3f, r0	; 63
+ 26a:	0f 90       	pop	r0
+ 26c:	1f 90       	pop	r1
+ 26e:	18 95       	reti
+
+00000270 <__vector_21>:
+/********************************************************************
+ * 函数功能：串口发送中断处理函数
+ * 注意事项：
+ * *****************************************************************/
+ISR(USART0_UDRE_vect)
+{
+ 270:	1f 92       	push	r1
+ 272:	0f 92       	push	r0
+ 274:	0f b6       	in	r0, 0x3f	; 63
+ 276:	0f 92       	push	r0
+ 278:	11 24       	eor	r1, r1
+ 27a:	8f 93       	push	r24
+ 27c:	9f 93       	push	r25
+ 27e:	ef 93       	push	r30
+ 280:	ff 93       	push	r31
+    uchar tmptail;
+
+	// 发送缓冲池不为空
+    if ( UART_TxHead != UART_TxTail ) 
+ 282:	90 91 2b 01 	lds	r25, 0x012B
+ 286:	80 91 2c 01 	lds	r24, 0x012C
+ 28a:	98 17       	cp	r25, r24
+ 28c:	a1 f0       	breq	.+40     	; 0x2b6 <__vector_21+0x46>
+	{
+		// 计算偏移量
+        tmptail = ( UART_TxTail + 1 ) & UART_TX_BUFFER_MASK;
+ 28e:	e0 91 2c 01 	lds	r30, 0x012C
+ 292:	ef 5f       	subi	r30, 0xFF	; 255
+ 294:	ef 70       	andi	r30, 0x0F	; 15
+        UART_TxTail = tmptail; //回写偏移量
+ 296:	e0 93 2c 01 	sts	0x012C, r30
+        UDR0 = UART_TxBuf[tmptail]; //将缓冲池的一个字节放入串口数据发送寄存器UDR0
+ 29a:	f0 e0       	ldi	r31, 0x00	; 0
+ 29c:	e5 5e       	subi	r30, 0xE5	; 229
+ 29e:	fe 4f       	sbci	r31, 0xFE	; 254
+ 2a0:	80 81       	ld	r24, Z
+ 2a2:	8c b9       	out	0x0c, r24	; 12
+   //发送缓冲池为空
+	else 
+	{
+        UCSR0B &= ~(1<<UDRIE0); //禁止发送中断
+    }
+}
+ 2a4:	ff 91       	pop	r31
+ 2a6:	ef 91       	pop	r30
+ 2a8:	9f 91       	pop	r25
+ 2aa:	8f 91       	pop	r24
+ 2ac:	0f 90       	pop	r0
+ 2ae:	0f be       	out	0x3f, r0	; 63
+ 2b0:	0f 90       	pop	r0
+ 2b2:	1f 90       	pop	r1
+ 2b4:	18 95       	reti
+    } 
+
+   //发送缓冲池为空
+	else 
+	{
+        UCSR0B &= ~(1<<UDRIE0); //禁止发送中断
+ 2b6:	55 98       	cbi	0x0a, 5	; 10
+ 2b8:	f5 cf       	rjmp	.-22     	; 0x2a4 <__vector_21+0x34>
+
+000002ba <getch>:
+ * *****************************************************************/
+uchar getch( void )
+{
+    uchar tmptail;
+	//接收缓冲区为空 则阻塞
+    while ( UART_RxHead == UART_RxTail ) ;
+ 2ba:	90 91 19 01 	lds	r25, 0x0119
+ 2be:	80 91 1a 01 	lds	r24, 0x011A
+ 2c2:	98 17       	cp	r25, r24
+ 2c4:	d1 f3       	breq	.-12     	; 0x2ba <getch>
+
+    tmptail = ( UART_RxTail + 1 ) & UART_RX_BUFFER_MASK;
+ 2c6:	e0 91 1a 01 	lds	r30, 0x011A
+ 2ca:	ef 5f       	subi	r30, 0xFF	; 255
+ 2cc:	ef 70       	andi	r30, 0x0F	; 15
+    UART_RxTail = tmptail;
+ 2ce:	e0 93 1a 01 	sts	0x011A, r30
+    return UART_RxBuf[tmptail];//相当于返回接收缓冲池即等待队列的第一个字节
+ 2d2:	f0 e0       	ldi	r31, 0x00	; 0
+ 2d4:	e7 5f       	subi	r30, 0xF7	; 247
+ 2d6:	fe 4f       	sbci	r31, 0xFE	; 254
+ 2d8:	80 81       	ld	r24, Z
+}
+ 2da:	08 95       	ret
+
+000002dc <putch>:
+/********************************************************************
+ * 函数功能：往发送缓冲池写一个字节
+ * 注意事项：
+ * *****************************************************************/
+void putch( uchar data )
+{
+ 2dc:	28 2f       	mov	r18, r24
+    uchar tmphead;
+    tmphead = ( UART_TxHead + 1 ) & UART_TX_BUFFER_MASK;
+ 2de:	90 91 2b 01 	lds	r25, 0x012B
+ 2e2:	9f 5f       	subi	r25, 0xFF	; 255
+ 2e4:	9f 70       	andi	r25, 0x0F	; 15
+    while ( tmphead == UART_TxTail ) ;
+ 2e6:	80 91 2c 01 	lds	r24, 0x012C
+ 2ea:	98 17       	cp	r25, r24
+ 2ec:	e1 f3       	breq	.-8      	; 0x2e6 <putch+0xa>
+    UART_TxBuf[tmphead] = data; 
+ 2ee:	e9 2f       	mov	r30, r25
+ 2f0:	f0 e0       	ldi	r31, 0x00	; 0
+ 2f2:	e5 5e       	subi	r30, 0xE5	; 229
+ 2f4:	fe 4f       	sbci	r31, 0xFE	; 254
+ 2f6:	20 83       	st	Z, r18
+    UART_TxHead = tmphead; 
+ 2f8:	90 93 2b 01 	sts	0x012B, r25
+
+    UCSR0B |= (1<<UDRIE0); //发送中断使能 自动进入发送中断处理函数
+ 2fc:	55 9a       	sbi	0x0a, 5	; 10
+}
+ 2fe:	08 95       	ret
+
+00000300 <putframe>:
+
+
+
+//发送帧 4个字节
+void  putframe(FRAME frame[]){
+ 300:	0f 93       	push	r16
+ 302:	1f 93       	push	r17
+ 304:	8c 01       	movw	r16, r24
+
+	uint i;
+	for(i=0;i<FRAME_LEN;i++)
+	{
+		putch(frame[i]);
+ 306:	fc 01       	movw	r30, r24
+ 308:	80 81       	ld	r24, Z
+ 30a:	0e 94 6e 01 	call	0x2dc	; 0x2dc <putch>
+ 30e:	f8 01       	movw	r30, r16
+ 310:	81 81       	ldd	r24, Z+1	; 0x01
+ 312:	0e 94 6e 01 	call	0x2dc	; 0x2dc <putch>
+ 316:	f8 01       	movw	r30, r16
+ 318:	82 81       	ldd	r24, Z+2	; 0x02
+ 31a:	0e 94 6e 01 	call	0x2dc	; 0x2dc <putch>
+ 31e:	f8 01       	movw	r30, r16
+ 320:	83 81       	ldd	r24, Z+3	; 0x03
+ 322:	0e 94 6e 01 	call	0x2dc	; 0x2dc <putch>
+	}
+}
+ 326:	1f 91       	pop	r17
+ 328:	0f 91       	pop	r16
+ 32a:	08 95       	ret
+
+0000032c <check>:
+#define FRAME_CHECK        3
+*/
+
+
+//求校验字节
+uchar check(FRAME frame[]){
+ 32c:	fc 01       	movw	r30, r24
+	
+   uchar check = 0x00;
+
+   check ^= frame[FRAME_HEAD];
+   check ^= frame[FRAME_SENSORID];
+ 32e:	81 81       	ldd	r24, Z+1	; 0x01
+ 330:	92 81       	ldd	r25, Z+2	; 0x02
+ 332:	89 27       	eor	r24, r25
+ 334:	90 81       	ld	r25, Z
+   check ^= frame[FRAME_DATA_1];
+
+   return check;
+}
+ 336:	89 27       	eor	r24, r25
+ 338:	08 95       	ret
+
+0000033a <get_light>:
+
+/************************光敏传感器***************************/
+
+uchar get_light(void)//获取光敏传感器数据
+{
+ 	CLRBIT(DDRB,LIGHT_BUS);
+ 33a:	b9 98       	cbi	0x17, 1	; 23
+ 33c:	80 e6       	ldi	r24, 0x60	; 96
+ 33e:	9a ee       	ldi	r25, 0xEA	; 234
+ 340:	01 97       	sbiw	r24, 0x01	; 1
+ 342:	f1 f7       	brne	.-4      	; 0x340 <get_light+0x6>
+	_delay_ms(30);
+	
+	if(GETBIT(PINB, LIGHT_BUS))
+ 344:	86 b3       	in	r24, 0x16	; 22
+ 346:	86 95       	lsr	r24
+ 348:	80 fd       	sbrc	r24, 0
+ 34a:	02 c0       	rjmp	.+4      	; 0x350 <get_light+0x16>
+ 34c:	8f ef       	ldi	r24, 0xFF	; 255
+ 34e:	08 95       	ret
+ 350:	81 e1       	ldi	r24, 0x11	; 17
+	   return 0x11;
+	else 
+	  return 0xFF;
+}
+ 352:	08 95       	ret
+
+00000354 <motor_shun>:
+
+
+void motor_shun(uchar n)
+{	  
+        unsigned char i=0,j = 128;
+ 	 	DDRD = 0XF0;
+ 354:	90 ef       	ldi	r25, 0xF0	; 240
+ 356:	91 bb       	out	0x11, r25	; 17
+		PORTD = 0XFF;
+ 358:	9f ef       	ldi	r25, 0xFF	; 255
+ 35a:	92 bb       	out	0x12, r25	; 18
+		//顺时针方向转
+		while(n!='0')
+ 35c:	80 33       	cpi	r24, 0x30	; 48
+ 35e:	09 f4       	brne	.+2      	; 0x362 <motor_shun+0xe>
+ 360:	08 95       	ret
+ 362:	20 e0       	ldi	r18, 0x00	; 0
+ 364:	3f e7       	ldi	r19, 0x7F	; 127
+ 366:	40 e7       	ldi	r20, 0x70	; 112
+ 368:	57 e1       	ldi	r21, 0x17	; 23
+		{
+		
+		while(j--)
+		{
+			if(i>=4) i%=4;
+			PORTD = shun[i];
+ 36a:	e2 2f       	mov	r30, r18
+ 36c:	f0 e0       	ldi	r31, 0x00	; 0
+ 36e:	ec 5f       	subi	r30, 0xFC	; 252
+ 370:	fe 4f       	sbci	r31, 0xFE	; 254
+ 372:	80 81       	ld	r24, Z
+ 374:	82 bb       	out	0x12, r24	; 18
+ 376:	ca 01       	movw	r24, r20
+ 378:	01 97       	sbiw	r24, 0x01	; 1
+ 37a:	f1 f7       	brne	.-4      	; 0x378 <motor_shun+0x24>
+			i++;
+			_delay_ms(3);
+			
+			if(j==0)return;
+ 37c:	33 23       	and	r19, r19
+ 37e:	81 f3       	breq	.-32     	; 0x360 <motor_shun+0xc>
+		
+		while(j--)
+		{
+			if(i>=4) i%=4;
+			PORTD = shun[i];
+			i++;
+ 380:	2f 5f       	subi	r18, 0xFF	; 255
+		while(n!='0')
+		{
+		
+		while(j--)
+		{
+			if(i>=4) i%=4;
+ 382:	24 30       	cpi	r18, 0x04	; 4
+ 384:	08 f0       	brcs	.+2      	; 0x388 <motor_shun+0x34>
+ 386:	23 70       	andi	r18, 0x03	; 3
+		PORTD = 0XFF;
+		//顺时针方向转
+		while(n!='0')
+		{
+		
+		while(j--)
+ 388:	31 50       	subi	r19, 0x01	; 1
+ 38a:	ef cf       	rjmp	.-34     	; 0x36a <motor_shun+0x16>
+
+0000038c <motor_ni>:
+
+
+void motor_ni(uchar n)   
+{	
+        unsigned char i=0,j = 128;
+ 	 	DDRD = 0XF0;
+ 38c:	90 ef       	ldi	r25, 0xF0	; 240
+ 38e:	91 bb       	out	0x11, r25	; 17
+		PORTD = 0XFF;
+ 390:	9f ef       	ldi	r25, 0xFF	; 255
+ 392:	92 bb       	out	0x12, r25	; 18
+		//顺时针方向转
+		while(n!='0')
+ 394:	80 33       	cpi	r24, 0x30	; 48
+ 396:	09 f4       	brne	.+2      	; 0x39a <motor_ni+0xe>
+ 398:	08 95       	ret
+ 39a:	20 e0       	ldi	r18, 0x00	; 0
+ 39c:	3f e7       	ldi	r19, 0x7F	; 127
+ 39e:	40 e7       	ldi	r20, 0x70	; 112
+ 3a0:	57 e1       	ldi	r21, 0x17	; 23
+		{
+		while(j--)
+		{
+			if(i>=4) i%=4;
+			PORTD = ni[i];
+ 3a2:	e2 2f       	mov	r30, r18
+ 3a4:	f0 e0       	ldi	r31, 0x00	; 0
+ 3a6:	e0 50       	subi	r30, 0x00	; 0
+ 3a8:	ff 4f       	sbci	r31, 0xFF	; 255
+ 3aa:	80 81       	ld	r24, Z
+ 3ac:	82 bb       	out	0x12, r24	; 18
+ 3ae:	ca 01       	movw	r24, r20
+ 3b0:	01 97       	sbiw	r24, 0x01	; 1
+ 3b2:	f1 f7       	brne	.-4      	; 0x3b0 <motor_ni+0x24>
+			i++;
+			_delay_ms(3);
+
+			if(j==0)return;
+ 3b4:	33 23       	and	r19, r19
+ 3b6:	81 f3       	breq	.-32     	; 0x398 <motor_ni+0xc>
+		{
+		while(j--)
+		{
+			if(i>=4) i%=4;
+			PORTD = ni[i];
+			i++;
+ 3b8:	2f 5f       	subi	r18, 0xFF	; 255
+		//顺时针方向转
+		while(n!='0')
+		{
+		while(j--)
+		{
+			if(i>=4) i%=4;
+ 3ba:	24 30       	cpi	r18, 0x04	; 4
+ 3bc:	08 f0       	brcs	.+2      	; 0x3c0 <motor_ni+0x34>
+ 3be:	23 70       	andi	r18, 0x03	; 3
+ 	 	DDRD = 0XF0;
+		PORTD = 0XFF;
+		//顺时针方向转
+		while(n!='0')
+		{
+		while(j--)
+ 3c0:	31 50       	subi	r19, 0x01	; 1
+ 3c2:	ef cf       	rjmp	.-34     	; 0x3a2 <motor_ni+0x16>
+
+000003c4 <delayus>:
+
+//微秒级延时
+void delayus(uchar del)
+{
+	while(del--);
+}
+ 3c4:	08 95       	ret
+
+000003c6 <init_lm75>:
+ * 提示说明：用于产生TWI(IIC)总线的起始信号
+ * *****************************************************************/
+void	init_lm75(void)
+{
+	//设置引脚方向
+	SETBIT(DDRC,LM75_SDA);	  //设置IO 位输出
+ 3c6:	a0 9a       	sbi	0x14, 0	; 20
+	SETBIT(DDRC,LM75_SCL);
+ 3c8:	a1 9a       	sbi	0x14, 1	; 20
+	//空闲状态 SDA、SCL均为高电平
+	SETBIT(PORTC,LM75_SDA);	  //输出  置1
+ 3ca:	a8 9a       	sbi	0x15, 0	; 21
+    can be achieved.
+*/
+void
+_delay_loop_1(uint8_t __count)
+{
+	__asm__ volatile (
+ 3cc:	8a e1       	ldi	r24, 0x1A	; 26
+ 3ce:	98 2f       	mov	r25, r24
+ 3d0:	9a 95       	dec	r25
+ 3d2:	f1 f7       	brne	.-4      	; 0x3d0 <init_lm75+0xa>
+	_delay_us(10);
+	SETBIT(PORTC,LM75_SCL);
+ 3d4:	a9 9a       	sbi	0x15, 1	; 21
+ 3d6:	8a 95       	dec	r24
+ 3d8:	f1 f7       	brne	.-4      	; 0x3d6 <init_lm75+0x10>
+	_delay_us(10);
+	//发出起始信号，时钟高电平时产生下降沿
+	CLRBIT(PORTC,LM75_SDA); //输出  清0
+ 3da:	a8 98       	cbi	0x15, 0	; 21
+ 3dc:	85 e3       	ldi	r24, 0x35	; 53
+ 3de:	98 2f       	mov	r25, r24
+ 3e0:	9a 95       	dec	r25
+ 3e2:	f1 f7       	brne	.-4      	; 0x3e0 <init_lm75+0x1a>
+	_delay_us(20);
+	CLRBIT(PORTC,LM75_SCL);
+ 3e4:	a9 98       	cbi	0x15, 1	; 21
+ 3e6:	8a 95       	dec	r24
+ 3e8:	f1 f7       	brne	.-4      	; 0x3e6 <init_lm75+0x20>
+	_delay_us(20);
+}
+ 3ea:	08 95       	ret
+
+000003ec <sendbyte_lm75>:
+ * 函数功能：单片机发送一字节数据给LM75
+ * *****************************************************************/
+uchar sendbyte_lm75(uchar buf)
+{
+	uchar i = 0;
+	SETBIT(DDRC,LM75_SDA);//设置IO为输出
+ 3ec:	a0 9a       	sbi	0x14, 0	; 20
+	SETBIT(DDRC,LM75_SCL);				
+ 3ee:	a1 9a       	sbi	0x14, 1	; 20
+ 3f0:	28 e0       	ldi	r18, 0x08	; 8
+ 3f2:	35 e3       	ldi	r19, 0x35	; 53
+ 3f4:	09 c0       	rjmp	.+18     	; 0x408 <sendbyte_lm75+0x1c>
+		CLRBIT(PORTC,LM75_SCL);
+		_delay_us(20);
+		if(buf & 0x80)		 //bit7 == 1
+			SETBIT(PORTC,LM75_SDA);  		  
+		else					 //bit7 == 0
+			CLRBIT(PORTC,LM75_SDA);
+ 3f6:	a8 98       	cbi	0x15, 0	; 21
+		buf <<= 1;
+		SETBIT(PORTC,LM75_SCL);
+ 3f8:	a9 9a       	sbi	0x15, 1	; 21
+ 3fa:	45 e3       	ldi	r20, 0x35	; 53
+ 3fc:	93 2f       	mov	r25, r19
+ 3fe:	9a 95       	dec	r25
+ 400:	f1 f7       	brne	.-4      	; 0x3fe <sendbyte_lm75+0x12>
+{
+	uchar i = 0;
+	SETBIT(DDRC,LM75_SDA);//设置IO为输出
+	SETBIT(DDRC,LM75_SCL);				
+	//将数据串行输出
+	for(i = 8;i > 0;i--){
+ 402:	21 50       	subi	r18, 0x01	; 1
+ 404:	49 f0       	breq	.+18     	; 0x418 <sendbyte_lm75+0x2c>
+		_delay_us(20);
+		if(buf & 0x80)		 //bit7 == 1
+			SETBIT(PORTC,LM75_SDA);  		  
+		else					 //bit7 == 0
+			CLRBIT(PORTC,LM75_SDA);
+		buf <<= 1;
+ 406:	88 0f       	add	r24, r24
+	uchar i = 0;
+	SETBIT(DDRC,LM75_SDA);//设置IO为输出
+	SETBIT(DDRC,LM75_SCL);				
+	//将数据串行输出
+	for(i = 8;i > 0;i--){
+		CLRBIT(PORTC,LM75_SCL);
+ 408:	a9 98       	cbi	0x15, 1	; 21
+ 40a:	93 2f       	mov	r25, r19
+ 40c:	9a 95       	dec	r25
+ 40e:	f1 f7       	brne	.-4      	; 0x40c <sendbyte_lm75+0x20>
+		_delay_us(20);
+		if(buf & 0x80)		 //bit7 == 1
+ 410:	87 ff       	sbrs	r24, 7
+ 412:	f1 cf       	rjmp	.-30     	; 0x3f6 <sendbyte_lm75+0xa>
+			SETBIT(PORTC,LM75_SDA);  		  
+ 414:	a8 9a       	sbi	0x15, 0	; 21
+ 416:	f0 cf       	rjmp	.-32     	; 0x3f8 <sendbyte_lm75+0xc>
+		buf <<= 1;
+		SETBIT(PORTC,LM75_SCL);
+		_delay_us(20);
+	}
+	//等待lm75发出应答信号
+	CLRBIT(PORTC,LM75_SCL);
+ 418:	a9 98       	cbi	0x15, 1	; 21
+ 41a:	84 2f       	mov	r24, r20
+ 41c:	8a 95       	dec	r24
+ 41e:	f1 f7       	brne	.-4      	; 0x41c <sendbyte_lm75+0x30>
+	_delay_us(20);//wait for ack
+	//释放数据线
+	SETBIT(PORTC,LM75_SDA);
+ 420:	a8 9a       	sbi	0x15, 0	; 21
+ 422:	8d e0       	ldi	r24, 0x0D	; 13
+ 424:	8a 95       	dec	r24
+ 426:	f1 f7       	brne	.-4      	; 0x424 <sendbyte_lm75+0x38>
+	_delay_us(5);
+	//修改SDA引脚为输入，准备接受应答信号
+	CLRBIT(DDRC,LM75_SDA);	//set SDA  input	
+ 428:	a0 98       	cbi	0x14, 0	; 20
+	SETBIT(PORTC,LM75_SCL);		
+ 42a:	a9 9a       	sbi	0x15, 1	; 21
+ 42c:	84 2f       	mov	r24, r20
+ 42e:	8a 95       	dec	r24
+ 430:	f1 f7       	brne	.-4      	; 0x42e <sendbyte_lm75+0x42>
+	_delay_us(20);
+
+	if(GETBIT(PINC,LM75_SDA)){//fail
+ 432:	98 99       	sbic	0x13, 0	; 19
+ 434:	04 c0       	rjmp	.+8      	; 0x43e <sendbyte_lm75+0x52>
+		SETBIT(DDRC,LM75_SCL);
+		CLRBIT(PORTC,LM75_SCL);
+		return 0xEE;
+	}else{//成功返回 地址
+		SETBIT(DDRC,LM75_SCL);
+ 436:	a1 9a       	sbi	0x14, 1	; 20
+		CLRBIT(PORTC,LM75_SCL);
+ 438:	a9 98       	cbi	0x15, 1	; 21
+ 43a:	85 e9       	ldi	r24, 0x95	; 149
+		return LM75_RD_ADDRESS;
+	}
+
+}
+ 43c:	08 95       	ret
+	CLRBIT(DDRC,LM75_SDA);	//set SDA  input	
+	SETBIT(PORTC,LM75_SCL);		
+	_delay_us(20);
+
+	if(GETBIT(PINC,LM75_SDA)){//fail
+		SETBIT(DDRC,LM75_SCL);
+ 43e:	a1 9a       	sbi	0x14, 1	; 20
+		CLRBIT(PORTC,LM75_SCL);
+ 440:	a9 98       	cbi	0x15, 1	; 21
+ 442:	8e ee       	ldi	r24, 0xEE	; 238
+ 444:	08 95       	ret
+
+00000446 <getbyte_lm75>:
+ * 函数功能：单片机从LM75获取一字节数据函数
+ * **************************************************************/
+uchar getbyte_lm75(void)
+{
+	uchar i = 0,buf = 0;
+	CLRBIT(DDRC,LM75_SDA);//数据输入
+ 446:	a0 98       	cbi	0x14, 0	; 20
+	SETBIT(DDRC,LM75_SCL);//时钟输出
+ 448:	a1 9a       	sbi	0x14, 1	; 20
+ 44a:	90 e0       	ldi	r25, 0x00	; 0
+ 44c:	80 e0       	ldi	r24, 0x00	; 0
+			 
+	for(i = 0;i < 8;i++){
+
+		/*置时钟线为低，准备接收数据位*/
+		CLRBIT(PORTC,LM75_SCL);
+ 44e:	a9 98       	cbi	0x15, 1	; 21
+		delayus(20);
+
+		/*置时钟线为高使数据线上数据有效*/
+		SETBIT(PORTC,LM75_SCL);
+ 450:	a9 9a       	sbi	0x15, 1	; 21
+		delayus(10);
+		buf <<= 1;
+ 452:	88 0f       	add	r24, r24
+
+		/*读数据位,接收的数据位放入buf中*/
+		if(GETBIT(PINC,LM75_SDA)){
+ 454:	98 99       	sbic	0x13, 0	; 19
+			buf += 1;
+ 456:	8f 5f       	subi	r24, 0xFF	; 255
+			delayus(10);
+		}
+		CLRBIT(PORTC,LM75_SCL);		
+ 458:	a9 98       	cbi	0x15, 1	; 21
+{
+	uchar i = 0,buf = 0;
+	CLRBIT(DDRC,LM75_SDA);//数据输入
+	SETBIT(DDRC,LM75_SCL);//时钟输出
+			 
+	for(i = 0;i < 8;i++){
+ 45a:	9f 5f       	subi	r25, 0xFF	; 255
+ 45c:	98 30       	cpi	r25, 0x08	; 8
+ 45e:	b9 f7       	brne	.-18     	; 0x44e <getbyte_lm75+0x8>
+			delayus(10);
+		}
+		CLRBIT(PORTC,LM75_SCL);		
+	}
+	return buf;
+}
+ 460:	08 95       	ret
+
+00000462 <stop_lm75>:
+ * 函数功能：单片机发送停止信号
+ * **************************************************************/
+void stop_lm75(void)
+{
+	//设置IO方向
+	SETBIT(DDRC,LM75_SDA);
+ 462:	a0 9a       	sbi	0x14, 0	; 20
+	SETBIT(DDRC,LM75_SCL);
+ 464:	a1 9a       	sbi	0x14, 1	; 20
+	//初始信号线为低
+	CLRBIT(PORTC,LM75_SDA);
+ 466:	a8 98       	cbi	0x15, 0	; 21
+	delayus(20);
+	//发送停止信号
+	SETBIT(PORTC,LM75_SCL);
+ 468:	a9 9a       	sbi	0x15, 1	; 21
+	delayus(20);
+	SETBIT(PORTC,LM75_SDA);
+ 46a:	a8 9a       	sbi	0x15, 0	; 21
+	delayus(20);
+}
+ 46c:	08 95       	ret
+
+0000046e <ack_lm75>:
+/****************************************************************
+ * 函数功能：单片机进行应答信号 
+ * **************************************************************/
+void ack_lm75(uchar ack)
+{
+	SETBIT(DDRC,LM75_SDA);
+ 46e:	a0 9a       	sbi	0x14, 0	; 20
+	SETBIT(DDRC,LM75_SCL);
+ 470:	a1 9a       	sbi	0x14, 1	; 20
+
+	if(ack)
+ 472:	88 23       	and	r24, r24
+ 474:	21 f0       	breq	.+8      	; 0x47e <ack_lm75+0x10>
+		CLRBIT(PORTC,LM75_SDA);
+ 476:	a8 98       	cbi	0x15, 0	; 21
+	else
+		SETBIT(PORTC,LM75_SDA);
+
+	delayus(8);
+	SETBIT(PORTC,LM75_SCL);
+ 478:	a9 9a       	sbi	0x15, 1	; 21
+	delayus(20);
+	CLRBIT(PORTC,LM75_SCL);
+ 47a:	a9 98       	cbi	0x15, 1	; 21
+	delayus(10);
+}
+ 47c:	08 95       	ret
+	SETBIT(DDRC,LM75_SCL);
+
+	if(ack)
+		CLRBIT(PORTC,LM75_SDA);
+	else
+		SETBIT(PORTC,LM75_SDA);
+ 47e:	a8 9a       	sbi	0x15, 0	; 21
+
+	delayus(8);
+	SETBIT(PORTC,LM75_SCL);
+ 480:	a9 9a       	sbi	0x15, 1	; 21
+	delayus(20);
+	CLRBIT(PORTC,LM75_SCL);
+ 482:	a9 98       	cbi	0x15, 1	; 21
+	delayus(10);
+}
+ 484:	08 95       	ret
+
+00000486 <temperature_lm75>:
+
+/****************************************************************
+ * 函数功能：单片机获取温度值
+ * **************************************************************/
+uchar temperature_lm75(void)
+{
+ 486:	0f 93       	push	r16
+ 488:	1f 93       	push	r17
+ 	uchar temp[2];
+	uchar i;
+
+	//发送起始信号
+	init_lm75();
+ 48a:	0e 94 e3 01 	call	0x3c6	; 0x3c6 <init_lm75>
+
+	//发送LM75的地址:读写位 1001 A2 A1 A
+	T3=sendbyte_lm75(0x95) ;
+ 48e:	85 e9       	ldi	r24, 0x95	; 149
+ 490:	0e 94 f6 01 	call	0x3ec	; 0x3ec <sendbyte_lm75>
+ 494:	80 93 33 01 	sts	0x0133, r24
+ 498:	10 92 34 01 	sts	0x0134, r1
+
+    //整数字节
+	temp[1] = getbyte_lm75();
+ 49c:	0e 94 23 02 	call	0x446	; 0x446 <getbyte_lm75>
+ 4a0:	08 2f       	mov	r16, r24
+	ack_lm75(1);
+ 4a2:	81 e0       	ldi	r24, 0x01	; 1
+ 4a4:	0e 94 37 02 	call	0x46e	; 0x46e <ack_lm75>
+
+    //小数字节
+	temp[0] = getbyte_lm75();
+ 4a8:	0e 94 23 02 	call	0x446	; 0x446 <getbyte_lm75>
+ 4ac:	18 2f       	mov	r17, r24
+	ack_lm75(0);
+ 4ae:	80 e0       	ldi	r24, 0x00	; 0
+ 4b0:	0e 94 37 02 	call	0x46e	; 0x46e <ack_lm75>
+  
+    //停止
+	stop_lm75();
+ 4b4:	0e 94 31 02 	call	0x462	; 0x462 <stop_lm75>
+
+
+	i = 0;
+	i = temp[1]&0x80;    //1000 0000  i得到temp[1]的第8位
+	temp[1] <<= 1;      //左移一位
+	temp[1] |= (temp[0]>>7); //将temp[0]的最高位 作为 temp[1]的最低位
+ 4b8:	11 1f       	adc	r17, r17
+ 4ba:	11 27       	eor	r17, r17
+ 4bc:	11 1f       	adc	r17, r17
+ 4be:	80 2f       	mov	r24, r16
+ 4c0:	88 0f       	add	r24, r24
+ 4c2:	18 2b       	or	r17, r24
+
+	if(i){//负数转码
+ 4c4:	07 fd       	sbrc	r16, 7
+		temp[1] = ~temp[1]+1;
+ 4c6:	11 95       	neg	r17
+    //装换成10进制数
+	//temp[1] = Hex_Decimal(temp[1]);
+
+	return temp[1];
+ 
+}
+ 4c8:	81 2f       	mov	r24, r17
+ 4ca:	1f 91       	pop	r17
+ 4cc:	0f 91       	pop	r16
+ 4ce:	08 95       	ret
+
+000004d0 <get_vib>:
+/************************震动传感器***************************/
+
+
+uchar get_vib(void) //获取震动传感器数据
+{
+    CLRBIT(DDRD, VIB_BUS);
+ 4d0:	8a 98       	cbi	0x11, 2	; 17
+    milliseconds can be achieved.
+ */
+void
+_delay_loop_2(uint16_t __count)
+{
+	__asm__ volatile (
+ 4d2:	80 e6       	ldi	r24, 0x60	; 96
+ 4d4:	9a ee       	ldi	r25, 0xEA	; 234
+ 4d6:	01 97       	sbiw	r24, 0x01	; 1
+ 4d8:	f1 f7       	brne	.-4      	; 0x4d6 <get_vib+0x6>
+	_delay_ms(30);
+
+	if(GETBIT(PIND, VIB_BUS))
+ 4da:	80 b3       	in	r24, 0x10	; 16
+ 4dc:	86 95       	lsr	r24
+ 4de:	86 95       	lsr	r24
+ 4e0:	80 fd       	sbrc	r24, 0
+ 4e2:	02 c0       	rjmp	.+4      	; 0x4e8 <get_vib+0x18>
+ 4e4:	81 e1       	ldi	r24, 0x11	; 17
+ 4e6:	08 95       	ret
+ 4e8:	8f ef       	ldi	r24, 0xFF	; 255
+	   return 0xFF;
+	else 
+	   return 0x11;
+}
+ 4ea:	08 95       	ret
+
+000004ec <led_test>:
+
+
+void led_test(uchar led_count)
+{
+	//设置PA0为输出模式
+	DDRA=0xFF;
+ 4ec:	8f ef       	ldi	r24, 0xFF	; 255
+ 4ee:	8a bb       	out	0x1a, r24	; 26
+
+    //PORTA = 0x00;
+    //_delay_ms(10);
+   // PORTA ^=1<<led_count;
+    PORTA  = ~PORTA;
+ 4f0:	8b b3       	in	r24, 0x1b	; 27
+ 4f2:	80 95       	com	r24
+ 4f4:	8b bb       	out	0x1b, r24	; 27
+
+}
+ 4f6:	08 95       	ret
+
+000004f8 <delay_us>:
+ * 返    回：
+ * *****************************************************************/
+void delay_us(unsigned char us)
+{
+	while(us--);
+}
+ 4f8:	08 95       	ret
+
+000004fa <delay_ms>:
+{
+	int t;
+	while(ms--) {
+		for(t=1000;t>0;t--);
+	}
+}
+ 4fa:	08 95       	ret
+
+000004fc <get_DHT11_value>:
+
+unsigned char get_DHT11_value(void)
+{        
+	uint8 bit;
+	uint8 p=0,time_count;         
+	hum_h = 0x00;
+ 4fc:	10 92 2d 01 	sts	0x012D, r1
+	tem_h = 0x00;
+ 500:	10 92 38 01 	sts	0x0138, r1
+
+	bit=0x80;
+
+	DATA_L;		//PORTB &= ~BIT(PB0)
+ 504:	c0 98       	cbi	0x18, 0	; 24
+	DATA_OUTPUT;
+ 506:	b8 9a       	sbi	0x17, 0	; 23
+ 508:	80 e6       	ldi	r24, 0x60	; 96
+ 50a:	9a ee       	ldi	r25, 0xEA	; 234
+ 50c:	01 97       	sbiw	r24, 0x01	; 1
+ 50e:	f1 f7       	brne	.-4      	; 0x50c <__stack+0xd>
+	//delay_30_ms();
+	_delay_ms(30);
+
+	DATA_H;
+ 510:	c0 9a       	sbi	0x18, 0	; 24
+	DATA_INPUT;
+ 512:	b8 98       	cbi	0x17, 0	; 23
+    can be achieved.
+*/
+void
+_delay_loop_1(uint8_t __count)
+{
+	__asm__ volatile (
+ 514:	80 ea       	ldi	r24, 0xA0	; 160
+ 516:	8a 95       	dec	r24
+ 518:	f1 f7       	brne	.-4      	; 0x516 <__stack+0x17>
+	_delay_us(60);
+	//delay_30_us();
+	//delay_30_us();
+
+	//无应答信号,退出
+	if(DATA_BUS!=0) return 0;         
+ 51a:	b0 99       	sbic	0x16, 0	; 22
+ 51c:	0a c0       	rjmp	.+20     	; 0x532 <__stack+0x33>
+ 51e:	90 e0       	ldi	r25, 0x00	; 0
+ 520:	2a e1       	ldi	r18, 0x1A	; 26
+	//等待电平变高,设置200us超时控制
+	time_count=0;
+	while(DATA_BUS==0) {        
+ 522:	b0 99       	sbic	0x16, 0	; 22
+ 524:	08 c0       	rjmp	.+16     	; 0x536 <__stack+0x37>
+ 526:	82 2f       	mov	r24, r18
+ 528:	8a 95       	dec	r24
+ 52a:	f1 f7       	brne	.-4      	; 0x528 <__stack+0x29>
+		//delay_10_us();
+		_delay_us(10);
+		if(++time_count==20)return 0;
+ 52c:	9f 5f       	subi	r25, 0xFF	; 255
+ 52e:	94 31       	cpi	r25, 0x14	; 20
+ 530:	c1 f7       	brne	.-16     	; 0x522 <__stack+0x23>
+		_delay_us(10);
+		if(++time_count==15)return 0;
+	}
+
+	//数据开始
+	while(p!=4) {        
+ 532:	80 e0       	ldi	r24, 0x00	; 0
+			bit=0x80;
+		}
+	}
+
+	return 1;
+}
+ 534:	08 95       	ret
+
+	//无应答信号,退出
+	if(DATA_BUS!=0) return 0;         
+	//等待电平变高,设置200us超时控制
+	time_count=0;
+	while(DATA_BUS==0) {        
+ 536:	90 e0       	ldi	r25, 0x00	; 0
+ 538:	2a e1       	ldi	r18, 0x1A	; 26
+		_delay_us(10);
+		if(++time_count==20)return 0;
+	}         
+	//等待电平变低,设置150us超时控制
+	time_count=0;
+	while(DATA_BUS==1) {        
+ 53a:	b0 9b       	sbis	0x16, 0	; 22
+ 53c:	08 c0       	rjmp	.+16     	; 0x54e <__stack+0x4f>
+ 53e:	82 2f       	mov	r24, r18
+ 540:	8a 95       	dec	r24
+ 542:	f1 f7       	brne	.-4      	; 0x540 <__stack+0x41>
+		//delay_10_us();
+		_delay_us(10);
+		if(++time_count==15)return 0;
+ 544:	9f 5f       	subi	r25, 0xFF	; 255
+ 546:	9f 30       	cpi	r25, 0x0F	; 15
+ 548:	a1 f3       	breq	.-24     	; 0x532 <__stack+0x33>
+		_delay_us(10);
+		if(++time_count==20)return 0;
+	}         
+	//等待电平变低,设置150us超时控制
+	time_count=0;
+	while(DATA_BUS==1) {        
+ 54a:	b0 99       	sbic	0x16, 0	; 22
+ 54c:	f8 cf       	rjmp	.-16     	; 0x53e <__stack+0x3f>
+ 54e:	70 91 35 01 	lds	r23, 0x0135
+ 552:	e0 91 3b 01 	lds	r30, 0x013B
+ 556:	40 e0       	ldi	r20, 0x00	; 0
+ 558:	50 e0       	ldi	r21, 0x00	; 0
+ 55a:	60 e0       	ldi	r22, 0x00	; 0
+ 55c:	3a e1       	ldi	r19, 0x1A	; 26
+		_delay_us(10);
+		if(++time_count==15)return 0;
+	}
+
+	//数据开始
+	while(p!=4) {        
+ 55e:	90 e0       	ldi	r25, 0x00	; 0
+ 560:	20 e8       	ldi	r18, 0x80	; 128
+		//低电平宽度50us
+		//等待电平变高,设置100us超时控制
+		time_count=0;
+		while(DATA_BUS==0) {        
+ 562:	b0 99       	sbic	0x16, 0	; 22
+ 564:	10 c0       	rjmp	.+32     	; 0x586 <__stack+0x87>
+ 566:	83 2f       	mov	r24, r19
+ 568:	8a 95       	dec	r24
+ 56a:	f1 f7       	brne	.-4      	; 0x568 <__stack+0x69>
+			//delay_10_us();
+			_delay_us(10);
+			if(++time_count==10) return 0;
+ 56c:	9f 5f       	subi	r25, 0xFF	; 255
+ 56e:	9a 30       	cpi	r25, 0x0A	; 10
+ 570:	c1 f7       	brne	.-16     	; 0x562 <__stack+0x63>
+		_delay_us(10);
+		if(++time_count==15)return 0;
+	}
+
+	//数据开始
+	while(p!=4) {        
+ 572:	50 93 2d 01 	sts	0x012D, r21
+ 576:	70 93 35 01 	sts	0x0135, r23
+ 57a:	60 93 38 01 	sts	0x0138, r22
+ 57e:	e0 93 3b 01 	sts	0x013B, r30
+ 582:	80 e0       	ldi	r24, 0x00	; 0
+ 584:	08 95       	ret
+		//低电平宽度50us
+		//等待电平变高,设置100us超时控制
+		time_count=0;
+		while(DATA_BUS==0) {        
+ 586:	90 e0       	ldi	r25, 0x00	; 0
+ 588:	83 2f       	mov	r24, r19
+ 58a:	8a 95       	dec	r24
+ 58c:	f1 f7       	brne	.-4      	; 0x58a <__stack+0x8b>
+
+		time_count=0;
+		do {         
+			//delay_10_us();
+			_delay_us(10);
+			time_count++;
+ 58e:	9f 5f       	subi	r25, 0xFF	; 255
+			if(time_count==10) return 0;
+ 590:	9a 30       	cpi	r25, 0x0A	; 10
+ 592:	79 f3       	breq	.-34     	; 0x572 <__stack+0x73>
+		}while(DATA_BUS==1);
+ 594:	b0 99       	sbic	0x16, 0	; 22
+ 596:	f8 cf       	rjmp	.-16     	; 0x588 <__stack+0x89>
+
+		//若高电平超过50us,说明数据位为1,否则为0
+		if(time_count>=5) {        
+ 598:	95 30       	cpi	r25, 0x05	; 5
+ 59a:	18 f0       	brcs	.+6      	; 0x5a2 <__stack+0xa3>
+			if(p==0) hum_h |=bit;
+ 59c:	44 23       	and	r20, r20
+ 59e:	29 f4       	brne	.+10     	; 0x5aa <__stack+0xab>
+ 5a0:	52 2b       	or	r21, r18
+			if(p==1) hum_l |=bit;
+			if(p==2) tem_h |=bit;
+			if(p==3) tem_l |=bit;
+		}
+
+		bit>>=1;
+ 5a2:	26 95       	lsr	r18
+		//1字节结束
+		if(bit==0x00) {        
+ 5a4:	31 f0       	breq	.+12     	; 0x5b2 <__stack+0xb3>
+ 5a6:	90 e0       	ldi	r25, 0x00	; 0
+ 5a8:	dc cf       	rjmp	.-72     	; 0x562 <__stack+0x63>
+		}while(DATA_BUS==1);
+
+		//若高电平超过50us,说明数据位为1,否则为0
+		if(time_count>=5) {        
+			if(p==0) hum_h |=bit;
+			if(p==1) hum_l |=bit;
+ 5aa:	41 30       	cpi	r20, 0x01	; 1
+ 5ac:	79 f4       	brne	.+30     	; 0x5cc <__stack+0xcd>
+ 5ae:	72 2b       	or	r23, r18
+ 5b0:	f8 cf       	rjmp	.-16     	; 0x5a2 <__stack+0xa3>
+		}
+
+		bit>>=1;
+		//1字节结束
+		if(bit==0x00) {        
+			p++;
+ 5b2:	4f 5f       	subi	r20, 0xFF	; 255
+		_delay_us(10);
+		if(++time_count==15)return 0;
+	}
+
+	//数据开始
+	while(p!=4) {        
+ 5b4:	44 30       	cpi	r20, 0x04	; 4
+ 5b6:	99 f6       	brne	.-90     	; 0x55e <__stack+0x5f>
+ 5b8:	50 93 2d 01 	sts	0x012D, r21
+ 5bc:	70 93 35 01 	sts	0x0135, r23
+ 5c0:	60 93 38 01 	sts	0x0138, r22
+ 5c4:	e0 93 3b 01 	sts	0x013B, r30
+ 5c8:	81 e0       	ldi	r24, 0x01	; 1
+ 5ca:	08 95       	ret
+
+		//若高电平超过50us,说明数据位为1,否则为0
+		if(time_count>=5) {        
+			if(p==0) hum_h |=bit;
+			if(p==1) hum_l |=bit;
+			if(p==2) tem_h |=bit;
+ 5cc:	42 30       	cpi	r20, 0x02	; 2
+ 5ce:	11 f4       	brne	.+4      	; 0x5d4 <__stack+0xd5>
+ 5d0:	62 2b       	or	r22, r18
+ 5d2:	e7 cf       	rjmp	.-50     	; 0x5a2 <__stack+0xa3>
+			if(p==3) tem_l |=bit;
+ 5d4:	43 30       	cpi	r20, 0x03	; 3
+ 5d6:	29 f7       	brne	.-54     	; 0x5a2 <__stack+0xa3>
+ 5d8:	e2 2b       	or	r30, r18
+ 5da:	e3 cf       	rjmp	.-58     	; 0x5a2 <__stack+0xa3>
+
+000005dc <_exit>:
+ 5dc:	f8 94       	cli
+
+000005de <__stop_program>:
+ 5de:	ff cf       	rjmp	.-2      	; 0x5de <__stop_program>

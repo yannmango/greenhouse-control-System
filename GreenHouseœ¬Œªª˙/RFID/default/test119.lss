@@ -1,0 +1,1920 @@
+
+test119.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000970  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .debug_aranges 00000040  00000000  00000000  000009c4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  2 .debug_pubnames 000001ae  00000000  00000000  00000a04  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  3 .debug_info   00000def  00000000  00000000  00000bb2  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_abbrev 00000440  00000000  00000000  000019a1  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_line   00000a7c  00000000  00000000  00001de1  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_frame  000001d0  00000000  00000000  00002860  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_str    0000031e  00000000  00000000  00002a30  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_loc    00000a54  00000000  00000000  00002d4e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_ranges 00000108  00000000  00000000  000037a2  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 38 00 	jmp	0x70	; 0x70 <__ctors_end>
+   4:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+   8:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+   c:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  10:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  14:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  18:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  1c:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  20:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  24:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  28:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  2c:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  30:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  34:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  38:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  3c:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  40:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  44:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  48:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  4c:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  50:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  54:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  58:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  5c:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  60:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  64:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  68:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+  6c:	0c 94 42 00 	jmp	0x84	; 0x84 <__bad_interrupt>
+
+00000070 <__ctors_end>:
+  70:	11 24       	eor	r1, r1
+  72:	1f be       	out	0x3f, r1	; 63
+  74:	cf ef       	ldi	r28, 0xFF	; 255
+  76:	d4 e0       	ldi	r29, 0x04	; 4
+  78:	de bf       	out	0x3e, r29	; 62
+  7a:	cd bf       	out	0x3d, r28	; 61
+  7c:	0e 94 61 00 	call	0xc2	; 0xc2 <main>
+  80:	0c 94 b6 04 	jmp	0x96c	; 0x96c <_exit>
+
+00000084 <__bad_interrupt>:
+  84:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000088 <putch>:
+#define baud_l  ((uint8)(baud_setting))
+
+
+void putch(uint8 data)
+{
+	while (!( UCSR0A & (1<<UDRE0)));//表明发送器一准备就绪
+  88:	5d 9b       	sbis	0x0b, 5	; 11
+  8a:	fe cf       	rjmp	.-4      	; 0x88 <putch>
+	UDR0 = data;
+  8c:	8c b9       	out	0x0c, r24	; 12
+}
+  8e:	08 95       	ret
+
+00000090 <puts>:
+
+
+void	puts(uint8* s)
+{
+  90:	fc 01       	movw	r30, r24
+	while(*s) {
+  92:	80 81       	ld	r24, Z
+  94:	88 23       	and	r24, r24
+  96:	39 f0       	breq	.+14     	; 0xa6 <puts+0x16>
+#define baud_l  ((uint8)(baud_setting))
+
+
+void putch(uint8 data)
+{
+	while (!( UCSR0A & (1<<UDRE0)));//表明发送器一准备就绪
+  98:	5d 9b       	sbis	0x0b, 5	; 11
+  9a:	fe cf       	rjmp	.-4      	; 0x98 <puts+0x8>
+	UDR0 = data;
+  9c:	8c b9       	out	0x0c, r24	; 12
+
+void	puts(uint8* s)
+{
+	while(*s) {
+		putch(*s);
+		s++;
+  9e:	31 96       	adiw	r30, 0x01	; 1
+}
+
+
+void	puts(uint8* s)
+{
+	while(*s) {
+  a0:	80 81       	ld	r24, Z
+  a2:	88 23       	and	r24, r24
+  a4:	c9 f7       	brne	.-14     	; 0x98 <puts+0x8>
+  a6:	08 95       	ret
+
+000000a8 <getch>:
+	}
+}
+
+uint8	getch(void)
+{
+	while(!(UCSR0A&(1<<RXC0)));
+  a8:	5f 9b       	sbis	0x0b, 7	; 11
+  aa:	fe cf       	rjmp	.-4      	; 0xa8 <getch>
+	return UDR0;
+  ac:	8c b1       	in	r24, 0x0c	; 12
+}
+  ae:	08 95       	ret
+
+000000b0 <USART_Init>:
+
+
+void USART_Init(void)
+{
+	UCSR0A=0x00;			//单倍速模式
+  b0:	1b b8       	out	0x0b, r1	; 11
+	UCSR0B=0x18;			//接收中断和发送中断使能
+  b2:	88 e1       	ldi	r24, 0x18	; 24
+  b4:	8a b9       	out	0x0a, r24	; 10
+	UCSR0C=0x86;			//异步通信无校验，8位数据位和1位停止位
+  b6:	86 e8       	ldi	r24, 0x86	; 134
+  b8:	80 bd       	out	0x20, r24	; 32
+	UBRR0H=baud_h;
+  ba:	10 bc       	out	0x20, r1	; 32
+	UBRR0L=baud_l;
+  bc:	83 e3       	ldi	r24, 0x33	; 51
+  be:	89 b9       	out	0x09, r24	; 9
+}
+  c0:	08 95       	ret
+
+000000c2 <main>:
+
+
+int main(void)
+{ 
+  c2:	ef 92       	push	r14
+  c4:	ff 92       	push	r15
+  c6:	0f 93       	push	r16
+  c8:	1f 93       	push	r17
+  ca:	df 93       	push	r29
+  cc:	cf 93       	push	r28
+  ce:	00 d0       	rcall	.+0      	; 0xd0 <main+0xe>
+  d0:	00 d0       	rcall	.+0      	; 0xd2 <main+0x10>
+  d2:	00 d0       	rcall	.+0      	; 0xd4 <main+0x12>
+  d4:	cd b7       	in	r28, 0x3d	; 61
+  d6:	de b7       	in	r29, 0x3e	; 62
+}
+
+
+void USART_Init(void)
+{
+	UCSR0A=0x00;			//单倍速模式
+  d8:	1b b8       	out	0x0b, r1	; 11
+	UCSR0B=0x18;			//接收中断和发送中断使能
+  da:	88 e1       	ldi	r24, 0x18	; 24
+  dc:	8a b9       	out	0x0a, r24	; 10
+	UCSR0C=0x86;			//异步通信无校验，8位数据位和1位停止位
+  de:	86 e8       	ldi	r24, 0x86	; 134
+  e0:	80 bd       	out	0x20, r24	; 32
+	UBRR0H=baud_h;
+  e2:	10 bc       	out	0x20, r1	; 32
+	UBRR0L=baud_l;
+  e4:	83 e3       	ldi	r24, 0x33	; 51
+  e6:	89 b9       	out	0x09, r24	; 9
+ *******************************************************************/
+
+
+	USART_Init();
+
+	init_rc522();
+  e8:	0e 94 85 03 	call	0x70a	; 0x70a <init_rc522>
+  ec:	7e 01       	movw	r14, r28
+  ee:	08 94       	sec
+  f0:	e1 1c       	adc	r14, r1
+  f2:	f1 1c       	adc	r15, r1
+    milliseconds can be achieved.
+ */
+void
+_delay_loop_2(uint16_t __count)
+{
+	__asm__ volatile (
+  f4:	08 ec       	ldi	r16, 0xC8	; 200
+  f6:	10 e0       	ldi	r17, 0x00	; 0
+	}
+}
+
+uint8	getch(void)
+{
+	while(!(UCSR0A&(1<<RXC0)));
+  f8:	5f 9b       	sbis	0x0b, 7	; 11
+  fa:	fe cf       	rjmp	.-4      	; 0xf8 <main+0x36>
+	return UDR0;
+  fc:	8c b1       	in	r24, 0x0c	; 12
+	while(1){
+
+
+	   cmd = getch();
+
+       if( cmd == 0x30){
+  fe:	80 33       	cpi	r24, 0x30	; 48
+ 100:	d9 f7       	brne	.-10     	; 0xf8 <main+0x36>
+	
+	      while(1)
+	      {
+		       if(getRFID(buf))
+ 102:	c7 01       	movw	r24, r14
+ 104:	0e 94 91 03 	call	0x722	; 0x722 <getRFID>
+ 108:	89 2b       	or	r24, r25
+ 10a:	d9 f3       	breq	.-10     	; 0x102 <main+0x40>
+		       {
+
+			
+		        	puts(buf);
+ 10c:	c7 01       	movw	r24, r14
+ 10e:	0e 94 48 00 	call	0x90	; 0x90 <puts>
+ 112:	24 ef       	ldi	r18, 0xF4	; 244
+ 114:	31 e0       	ldi	r19, 0x01	; 1
+ 116:	c8 01       	movw	r24, r16
+ 118:	01 97       	sbiw	r24, 0x01	; 1
+ 11a:	f1 f7       	brne	.-4      	; 0x118 <main+0x56>
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+ 11c:	21 50       	subi	r18, 0x01	; 1
+ 11e:	30 40       	sbci	r19, 0x00	; 0
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+ 120:	d1 f7       	brne	.-12     	; 0x116 <main+0x54>
+	}
+}
+
+uint8	getch(void)
+{
+	while(!(UCSR0A&(1<<RXC0)));
+ 122:	5f 9b       	sbis	0x0b, 7	; 11
+ 124:	fe cf       	rjmp	.-4      	; 0x122 <main+0x60>
+	return UDR0;
+ 126:	8c b1       	in	r24, 0x0c	; 12
+			 
+		        	_delay_ms(50);
+
+                    cmd = getch();
+
+					if(cmd == 0x30)
+ 128:	80 33       	cpi	r24, 0x30	; 48
+ 12a:	31 f7       	brne	.-52     	; 0xf8 <main+0x36>
+
+       if( cmd == 0x30){
+	
+	      while(1)
+	      {
+		       if(getRFID(buf))
+ 12c:	c7 01       	movw	r24, r14
+ 12e:	0e 94 91 03 	call	0x722	; 0x722 <getRFID>
+ 132:	89 2b       	or	r24, r25
+ 134:	31 f3       	breq	.-52     	; 0x102 <main+0x40>
+ 136:	ea cf       	rjmp	.-44     	; 0x10c <main+0x4a>
+
+00000138 <NOP>:
+    can be achieved.
+*/
+void
+_delay_loop_1(uint8_t __count)
+{
+	__asm__ volatile (
+ 138:	8a e1       	ldi	r24, 0x1A	; 26
+ 13a:	8a 95       	dec	r24
+ 13c:	f1 f7       	brne	.-4      	; 0x13a <NOP+0x2>
+ * 返    回：
+ * *****************************************************************/
+void nop()
+{
+	_delay_us(10);
+}
+ 13e:	08 95       	ret
+
+00000140 <SPIReadByte>:
+ * 提示说明：
+ * 输    入：
+ * 返    回：
+ * *****************************************************************/
+uint8 SPIReadByte(void)
+{
+ 140:	20 e0       	ldi	r18, 0x00	; 0
+ 142:	80 e0       	ldi	r24, 0x00	; 0
+ 144:	3a e1       	ldi	r19, 0x1A	; 26
+
+	SPIData = 0;
+	for (SPICount = 0; SPICount < 8; SPICount++)
+	{// Prepare to clock in the data to be read
+
+		SPIData <<=1;// Rotate the data
+ 146:	88 0f       	add	r24, r24
+		CLR_SPI_CK; 
+ 148:	a9 98       	cbi	0x15, 1	; 21
+ 14a:	93 2f       	mov	r25, r19
+ 14c:	9a 95       	dec	r25
+ 14e:	f1 f7       	brne	.-4      	; 0x14c <SPIReadByte+0xc>
+		nop();nop();// Raise the clock to clock the data out of the MAX7456
+		if(STU_SPI_MISO)
+ 150:	93 2f       	mov	r25, r19
+ 152:	9a 95       	dec	r25
+ 154:	f1 f7       	brne	.-4      	; 0x152 <SPIReadByte+0x12>
+ 156:	9b 99       	sbic	0x13, 3	; 19
+		{
+			SPIData|=0x01;
+ 158:	81 60       	ori	r24, 0x01	; 1
+		}
+		SET_SPI_CK;   nop();nop();// Drop the clock ready for the next bit
+ 15a:	a9 9a       	sbi	0x15, 1	; 21
+ 15c:	93 2f       	mov	r25, r19
+ 15e:	9a 95       	dec	r25
+ 160:	f1 f7       	brne	.-4      	; 0x15e <SPIReadByte+0x1e>
+{
+	uint8 SPICount;// Counter used to clock out the data
+	uint8 SPIData; 
+
+	SPIData = 0;
+	for (SPICount = 0; SPICount < 8; SPICount++)
+ 162:	93 2f       	mov	r25, r19
+ 164:	9a 95       	dec	r25
+ 166:	f1 f7       	brne	.-4      	; 0x164 <SPIReadByte+0x24>
+ 168:	2f 5f       	subi	r18, 0xFF	; 255
+ 16a:	28 30       	cpi	r18, 0x08	; 8
+ 16c:	61 f7       	brne	.-40     	; 0x146 <SPIReadByte+0x6>
+			SPIData|=0x01;
+		}
+		SET_SPI_CK;   nop();nop();// Drop the clock ready for the next bit
+	}// and loop back
+	return (SPIData);// Finally return the read data
+} 
+ 16e:	08 95       	ret
+
+00000170 <SPIWriteByte>:
+ * 提示说明：
+ * 输    入：
+ * 返    回：
+ * *****************************************************************/
+void SPIWriteByte(uint8 SPIData)
+{
+ 170:	30 e0       	ldi	r19, 0x00	; 0
+ 172:	2a e1       	ldi	r18, 0x1A	; 26
+ 174:	19 c0       	rjmp	.+50     	; 0x1a8 <SPIWriteByte+0x38>
+	for (SPICount = 0; SPICount < 8; SPICount++)
+	{
+		if (SPIData & 0x80) {
+			SET_SPI_MOSI;
+		} else {
+			CLR_SPI_MOSI;
+ 176:	aa 98       	cbi	0x15, 2	; 21
+ 178:	92 2f       	mov	r25, r18
+ 17a:	9a 95       	dec	r25
+ 17c:	f1 f7       	brne	.-4      	; 0x17a <SPIWriteByte+0xa>
+		} 
+		nop();nop();
+		CLR_SPI_CK;nop();nop();
+ 17e:	92 2f       	mov	r25, r18
+ 180:	9a 95       	dec	r25
+ 182:	f1 f7       	brne	.-4      	; 0x180 <SPIWriteByte+0x10>
+ 184:	a9 98       	cbi	0x15, 1	; 21
+ 186:	92 2f       	mov	r25, r18
+ 188:	9a 95       	dec	r25
+ 18a:	f1 f7       	brne	.-4      	; 0x188 <SPIWriteByte+0x18>
+		SET_SPI_CK;nop();nop();
+ 18c:	92 2f       	mov	r25, r18
+ 18e:	9a 95       	dec	r25
+ 190:	f1 f7       	brne	.-4      	; 0x18e <SPIWriteByte+0x1e>
+ 192:	a9 9a       	sbi	0x15, 1	; 21
+ 194:	92 2f       	mov	r25, r18
+ 196:	9a 95       	dec	r25
+ 198:	f1 f7       	brne	.-4      	; 0x196 <SPIWriteByte+0x26>
+ * 返    回：
+ * *****************************************************************/
+void SPIWriteByte(uint8 SPIData)
+{
+	uint8 SPICount;// Counter used to clock out the data
+	for (SPICount = 0; SPICount < 8; SPICount++)
+ 19a:	92 2f       	mov	r25, r18
+ 19c:	9a 95       	dec	r25
+ 19e:	f1 f7       	brne	.-4      	; 0x19c <SPIWriteByte+0x2c>
+ 1a0:	3f 5f       	subi	r19, 0xFF	; 255
+ 1a2:	38 30       	cpi	r19, 0x08	; 8
+ 1a4:	29 f0       	breq	.+10     	; 0x1b0 <SPIWriteByte+0x40>
+			CLR_SPI_MOSI;
+		} 
+		nop();nop();
+		CLR_SPI_CK;nop();nop();
+		SET_SPI_CK;nop();nop();
+		SPIData <<= 1;
+ 1a6:	88 0f       	add	r24, r24
+void SPIWriteByte(uint8 SPIData)
+{
+	uint8 SPICount;// Counter used to clock out the data
+	for (SPICount = 0; SPICount < 8; SPICount++)
+	{
+		if (SPIData & 0x80) {
+ 1a8:	87 ff       	sbrs	r24, 7
+ 1aa:	e5 cf       	rjmp	.-54     	; 0x176 <SPIWriteByte+0x6>
+			SET_SPI_MOSI;
+ 1ac:	aa 9a       	sbi	0x15, 2	; 21
+ 1ae:	e4 cf       	rjmp	.-56     	; 0x178 <SPIWriteByte+0x8>
+ 1b0:	08 95       	ret
+
+000001b2 <ReadRawRC>:
+ * *****************************************************************/
+uint8 ReadRawRC(uint8 Address)
+{
+	uint8 ucAddr;
+	uint8 ucResult=0;
+	CLR_SPI_CS;
+ 1b2:	a8 98       	cbi	0x15, 0	; 21
+	ucAddr = ((Address<<1)&0x7E)|0x80;
+	SPIWriteByte(ucAddr);
+ 1b4:	88 0f       	add	r24, r24
+ 1b6:	8e 77       	andi	r24, 0x7E	; 126
+ 1b8:	80 68       	ori	r24, 0x80	; 128
+ 1ba:	0e 94 b8 00 	call	0x170	; 0x170 <SPIWriteByte>
+	ucResult=SPIReadByte();
+ 1be:	0e 94 a0 00 	call	0x140	; 0x140 <SPIReadByte>
+	SET_SPI_CS;
+ 1c2:	a8 9a       	sbi	0x15, 0	; 21
+	return ucResult;
+}
+ 1c4:	08 95       	ret
+
+000001c6 <WriteRawRC>:
+ * 提示说明：
+ * 输    入：Address[IN]:寄存器地址
+ * 返    回：写入的值
+ * *****************************************************************/
+void WriteRawRC(uint8 Address, uint8 value)
+{  
+ 1c6:	1f 93       	push	r17
+ 1c8:	16 2f       	mov	r17, r22
+	uint8 ucAddr;
+
+	CLR_SPI_CS;
+ 1ca:	a8 98       	cbi	0x15, 0	; 21
+	ucAddr = ((Address<<1)&0x7E);
+	SPIWriteByte(ucAddr);
+ 1cc:	88 0f       	add	r24, r24
+ 1ce:	8e 77       	andi	r24, 0x7E	; 126
+ 1d0:	0e 94 b8 00 	call	0x170	; 0x170 <SPIWriteByte>
+	SPIWriteByte(value);
+ 1d4:	81 2f       	mov	r24, r17
+ 1d6:	0e 94 b8 00 	call	0x170	; 0x170 <SPIWriteByte>
+	SET_SPI_CS;
+ 1da:	a8 9a       	sbi	0x15, 0	; 21
+}   
+ 1dc:	1f 91       	pop	r17
+ 1de:	08 95       	ret
+
+000001e0 <ClearBitMask>:
+ * 提示说明：
+ * 输    入：reg[IN]:寄存器地址 mask[IN]:清位置
+ * 返    回：
+ * *****************************************************************/
+void ClearBitMask(uint8 reg,uint8 mask)  
+{
+ 1e0:	0f 93       	push	r16
+ 1e2:	1f 93       	push	r17
+ 1e4:	08 2f       	mov	r16, r24
+ 1e6:	16 2f       	mov	r17, r22
+	char tmp = 0x00;
+	tmp = ReadRawRC(reg);
+ 1e8:	0e 94 d9 00 	call	0x1b2	; 0x1b2 <ReadRawRC>
+	WriteRawRC(reg, tmp & ~mask);  // clear bit mask
+ 1ec:	10 95       	com	r17
+ 1ee:	18 23       	and	r17, r24
+ 1f0:	80 2f       	mov	r24, r16
+ 1f2:	61 2f       	mov	r22, r17
+ 1f4:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <WriteRawRC>
+} 
+ 1f8:	1f 91       	pop	r17
+ 1fa:	0f 91       	pop	r16
+ 1fc:	08 95       	ret
+
+000001fe <SetBitMask>:
+ * 提示说明：
+ * 输    入：reg[IN]:寄存器地址 mask[IN]:设置位置
+ * 返    回：
+ * *****************************************************************/
+void SetBitMask(uint8 reg,uint8 mask)  
+{
+ 1fe:	0f 93       	push	r16
+ 200:	1f 93       	push	r17
+ 202:	08 2f       	mov	r16, r24
+ 204:	16 2f       	mov	r17, r22
+	char tmp = 0x00;
+	tmp = ReadRawRC(reg);
+ 206:	0e 94 d9 00 	call	0x1b2	; 0x1b2 <ReadRawRC>
+	WriteRawRC(reg,tmp | mask);  // set bit mask
+ 20a:	18 2b       	or	r17, r24
+ 20c:	80 2f       	mov	r24, r16
+ 20e:	61 2f       	mov	r22, r17
+ 210:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <WriteRawRC>
+}
+ 214:	1f 91       	pop	r17
+ 216:	0f 91       	pop	r16
+ 218:	08 95       	ret
+
+0000021a <CalulateCRC>:
+ * 提示说明：
+ * 输    入：
+ * 返    回：
+ * *****************************************************************/
+void CalulateCRC(uint8 *pIndata,uint8 len,uint8 *pOutData)
+{
+ 21a:	df 92       	push	r13
+ 21c:	ef 92       	push	r14
+ 21e:	ff 92       	push	r15
+ 220:	0f 93       	push	r16
+ 222:	1f 93       	push	r17
+ 224:	cf 93       	push	r28
+ 226:	df 93       	push	r29
+ 228:	08 2f       	mov	r16, r24
+ 22a:	d9 2e       	mov	r13, r25
+ 22c:	16 2f       	mov	r17, r22
+ 22e:	7a 01       	movw	r14, r20
+	uint8 i,n;
+	ClearBitMask(DivIrqReg,0x04);
+ 230:	85 e0       	ldi	r24, 0x05	; 5
+ 232:	64 e0       	ldi	r22, 0x04	; 4
+ 234:	0e 94 f0 00 	call	0x1e0	; 0x1e0 <ClearBitMask>
+	WriteRawRC(CommandReg,PCD_IDLE);
+ 238:	81 e0       	ldi	r24, 0x01	; 1
+ 23a:	60 e0       	ldi	r22, 0x00	; 0
+ 23c:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <WriteRawRC>
+	SetBitMask(FIFOLevelReg,0x80);
+ 240:	8a e0       	ldi	r24, 0x0A	; 10
+ 242:	60 e8       	ldi	r22, 0x80	; 128
+ 244:	0e 94 ff 00 	call	0x1fe	; 0x1fe <SetBitMask>
+	for (i=0; i<len; i++)
+ 248:	11 23       	and	r17, r17
+ 24a:	61 f0       	breq	.+24     	; 0x264 <CalulateCRC+0x4a>
+ 24c:	80 2f       	mov	r24, r16
+ 24e:	9d 2d       	mov	r25, r13
+ 250:	9c 01       	movw	r18, r24
+ 252:	e9 01       	movw	r28, r18
+	{   WriteRawRC(FIFODataReg, *(pIndata+i));   }
+ 254:	89 e0       	ldi	r24, 0x09	; 9
+ 256:	69 91       	ld	r22, Y+
+ 258:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <WriteRawRC>
+{
+	uint8 i,n;
+	ClearBitMask(DivIrqReg,0x04);
+	WriteRawRC(CommandReg,PCD_IDLE);
+	SetBitMask(FIFOLevelReg,0x80);
+	for (i=0; i<len; i++)
+ 25c:	9e 01       	movw	r18, r28
+ 25e:	20 1b       	sub	r18, r16
+ 260:	21 17       	cp	r18, r17
+ 262:	c0 f3       	brcs	.-16     	; 0x254 <CalulateCRC+0x3a>
+	{   WriteRawRC(FIFODataReg, *(pIndata+i));   }
+	WriteRawRC(CommandReg, PCD_CALCCRC);
+ 264:	81 e0       	ldi	r24, 0x01	; 1
+ 266:	63 e0       	ldi	r22, 0x03	; 3
+ 268:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <WriteRawRC>
+	i = 0xFF;
+	do 
+	{
+		n = ReadRawRC(DivIrqReg);
+ 26c:	85 e0       	ldi	r24, 0x05	; 5
+ 26e:	0e 94 d9 00 	call	0x1b2	; 0x1b2 <ReadRawRC>
+ 272:	1e ef       	ldi	r17, 0xFE	; 254
+ 274:	05 c0       	rjmp	.+10     	; 0x280 <CalulateCRC+0x66>
+ 276:	85 e0       	ldi	r24, 0x05	; 5
+ 278:	0e 94 d9 00 	call	0x1b2	; 0x1b2 <ReadRawRC>
+		i--;
+ 27c:	11 50       	subi	r17, 0x01	; 1
+	} while ((i!=0) && !(n&0x04));
+ 27e:	11 f0       	breq	.+4      	; 0x284 <CalulateCRC+0x6a>
+ 280:	82 ff       	sbrs	r24, 2
+ 282:	f9 cf       	rjmp	.-14     	; 0x276 <CalulateCRC+0x5c>
+	pOutData[0] = ReadRawRC(CRCResultRegL);
+ 284:	82 e2       	ldi	r24, 0x22	; 34
+ 286:	0e 94 d9 00 	call	0x1b2	; 0x1b2 <ReadRawRC>
+ 28a:	f7 01       	movw	r30, r14
+ 28c:	80 83       	st	Z, r24
+	pOutData[1] = ReadRawRC(CRCResultRegM);
+ 28e:	81 e2       	ldi	r24, 0x21	; 33
+ 290:	0e 94 d9 00 	call	0x1b2	; 0x1b2 <ReadRawRC>
+ 294:	f7 01       	movw	r30, r14
+ 296:	81 83       	std	Z+1, r24	; 0x01
+}
+ 298:	df 91       	pop	r29
+ 29a:	cf 91       	pop	r28
+ 29c:	1f 91       	pop	r17
+ 29e:	0f 91       	pop	r16
+ 2a0:	ff 90       	pop	r15
+ 2a2:	ef 90       	pop	r14
+ 2a4:	df 90       	pop	r13
+ 2a6:	08 95       	ret
+
+000002a8 <PcdComMF522>:
+char PcdComMF522(uint8 Command, 
+		uint8 *pInData, 
+		uint8 InLenByte,
+		uint8 *pOutData, 
+		uint32 *pOutLenBit)
+{
+ 2a8:	6f 92       	push	r6
+ 2aa:	7f 92       	push	r7
+ 2ac:	8f 92       	push	r8
+ 2ae:	9f 92       	push	r9
+ 2b0:	af 92       	push	r10
+ 2b2:	bf 92       	push	r11
+ 2b4:	cf 92       	push	r12
+ 2b6:	df 92       	push	r13
+ 2b8:	ef 92       	push	r14
+ 2ba:	ff 92       	push	r15
+ 2bc:	0f 93       	push	r16
+ 2be:	1f 93       	push	r17
+ 2c0:	cf 93       	push	r28
+ 2c2:	df 93       	push	r29
+ 2c4:	c8 2e       	mov	r12, r24
+ 2c6:	7b 01       	movw	r14, r22
+ 2c8:	b4 2e       	mov	r11, r20
+ 2ca:	49 01       	movw	r8, r18
+ 2cc:	38 01       	movw	r6, r16
+	uint8 irqEn   = 0x00;
+	uint8 waitFor = 0x00;
+	uint8 lastBits;
+	uint8 n;
+	uint32 i;
+	switch (Command)
+ 2ce:	8c e0       	ldi	r24, 0x0C	; 12
+ 2d0:	c8 16       	cp	r12, r24
+ 2d2:	09 f4       	brne	.+2      	; 0x2d6 <PcdComMF522+0x2e>
+ 2d4:	a0 c0       	rjmp	.+320    	; 0x416 <PcdComMF522+0x16e>
+ 2d6:	ee e0       	ldi	r30, 0x0E	; 14
+ 2d8:	ce 16       	cp	r12, r30
+ 2da:	09 f4       	brne	.+2      	; 0x2de <PcdComMF522+0x36>
+ 2dc:	a2 c0       	rjmp	.+324    	; 0x422 <PcdComMF522+0x17a>
+ 2de:	aa 24       	eor	r10, r10
+ 2e0:	dd 24       	eor	r13, r13
+ 2e2:	60 e8       	ldi	r22, 0x80	; 128
+			break;
+		default:
+			break;
+	}
+
+	WriteRawRC(ComIEnReg,irqEn|0x80);
+ 2e4:	82 e0       	ldi	r24, 0x02	; 2
+ 2e6:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <WriteRawRC>
+	ClearBitMask(ComIrqReg,0x80);
+ 2ea:	84 e0       	ldi	r24, 0x04	; 4
+ 2ec:	60 e8       	ldi	r22, 0x80	; 128
+ 2ee:	0e 94 f0 00 	call	0x1e0	; 0x1e0 <ClearBitMask>
+	WriteRawRC(CommandReg,PCD_IDLE);
+ 2f2:	81 e0       	ldi	r24, 0x01	; 1
+ 2f4:	60 e0       	ldi	r22, 0x00	; 0
+ 2f6:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <WriteRawRC>
+	SetBitMask(FIFOLevelReg,0x80);
+ 2fa:	8a e0       	ldi	r24, 0x0A	; 10
+ 2fc:	60 e8       	ldi	r22, 0x80	; 128
+ 2fe:	0e 94 ff 00 	call	0x1fe	; 0x1fe <SetBitMask>
+
+	for (i=0; i<InLenByte; i++) {   
+ 302:	cb 2d       	mov	r28, r11
+ 304:	d0 e0       	ldi	r29, 0x00	; 0
+ 306:	20 97       	sbiw	r28, 0x00	; 0
+ 308:	71 f0       	breq	.+28     	; 0x326 <PcdComMF522+0x7e>
+ 30a:	00 e0       	ldi	r16, 0x00	; 0
+ 30c:	10 e0       	ldi	r17, 0x00	; 0
+		WriteRawRC(FIFODataReg, pInData[i]);    
+ 30e:	f7 01       	movw	r30, r14
+ 310:	e0 0f       	add	r30, r16
+ 312:	f1 1f       	adc	r31, r17
+ 314:	89 e0       	ldi	r24, 0x09	; 9
+ 316:	60 81       	ld	r22, Z
+ 318:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <WriteRawRC>
+	WriteRawRC(ComIEnReg,irqEn|0x80);
+	ClearBitMask(ComIrqReg,0x80);
+	WriteRawRC(CommandReg,PCD_IDLE);
+	SetBitMask(FIFOLevelReg,0x80);
+
+	for (i=0; i<InLenByte; i++) {   
+ 31c:	0f 5f       	subi	r16, 0xFF	; 255
+ 31e:	1f 4f       	sbci	r17, 0xFF	; 255
+ 320:	0c 17       	cp	r16, r28
+ 322:	1d 07       	cpc	r17, r29
+ 324:	a0 f3       	brcs	.-24     	; 0x30e <PcdComMF522+0x66>
+		WriteRawRC(FIFODataReg, pInData[i]);    
+	}
+	WriteRawRC(CommandReg, Command);
+ 326:	81 e0       	ldi	r24, 0x01	; 1
+ 328:	6c 2d       	mov	r22, r12
+ 32a:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <WriteRawRC>
+
+	if (Command == PCD_TRANSCEIVE) {    
+ 32e:	fc e0       	ldi	r31, 0x0C	; 12
+ 330:	cf 16       	cp	r12, r31
+ 332:	09 f4       	brne	.+2      	; 0x336 <PcdComMF522+0x8e>
+ 334:	7f c0       	rjmp	.+254    	; 0x434 <PcdComMF522+0x18c>
+
+	//i = 600;//根据时钟频率调整，操作M1卡最大等待时间25ms
+	i = 2000;
+	do 
+	{
+		n = ReadRawRC(ComIrqReg);
+ 336:	84 e0       	ldi	r24, 0x04	; 4
+ 338:	0e 94 d9 00 	call	0x1b2	; 0x1b2 <ReadRawRC>
+ 33c:	f8 2e       	mov	r15, r24
+ 33e:	0f ec       	ldi	r16, 0xCF	; 207
+ 340:	17 e0       	ldi	r17, 0x07	; 7
+ 342:	08 c0       	rjmp	.+16     	; 0x354 <PcdComMF522+0xac>
+ 344:	84 e0       	ldi	r24, 0x04	; 4
+ 346:	0e 94 d9 00 	call	0x1b2	; 0x1b2 <ReadRawRC>
+ 34a:	f8 2e       	mov	r15, r24
+		i--;
+ 34c:	01 50       	subi	r16, 0x01	; 1
+ 34e:	10 40       	sbci	r17, 0x00	; 0
+	} while ((i!=0) && !(n&0x01) && !(n&waitFor));
+ 350:	09 f4       	brne	.+2      	; 0x354 <PcdComMF522+0xac>
+ 352:	43 c0       	rjmp	.+134    	; 0x3da <PcdComMF522+0x132>
+ 354:	f0 fc       	sbrc	r15, 0
+ 356:	03 c0       	rjmp	.+6      	; 0x35e <PcdComMF522+0xb6>
+ 358:	8f 2d       	mov	r24, r15
+ 35a:	8d 21       	and	r24, r13
+ 35c:	99 f3       	breq	.-26     	; 0x344 <PcdComMF522+0x9c>
+	ClearBitMask(BitFramingReg,0x80);
+ 35e:	8d e0       	ldi	r24, 0x0D	; 13
+ 360:	60 e8       	ldi	r22, 0x80	; 128
+ 362:	0e 94 f0 00 	call	0x1e0	; 0x1e0 <ClearBitMask>
+
+	if (i!=0) {    
+		if(!(ReadRawRC(ErrorReg)&0x1B)) {
+ 366:	86 e0       	ldi	r24, 0x06	; 6
+ 368:	0e 94 d9 00 	call	0x1b2	; 0x1b2 <ReadRawRC>
+ 36c:	8b 71       	andi	r24, 0x1B	; 27
+ 36e:	c9 f5       	brne	.+114    	; 0x3e2 <PcdComMF522+0x13a>
+			status = MI_OK;
+			if (n & irqEn & 0x01) {   status = MI_NOTAGERR;   }
+ 370:	8f 2d       	mov	r24, r15
+ 372:	8a 21       	and	r24, r10
+ 374:	80 fd       	sbrc	r24, 0
+ 376:	5b c0       	rjmp	.+182    	; 0x42e <PcdComMF522+0x186>
+ 378:	ff 24       	eor	r15, r15
+			if (Command == PCD_TRANSCEIVE) {
+ 37a:	8c e0       	ldi	r24, 0x0C	; 12
+ 37c:	c8 16       	cp	r12, r24
+ 37e:	99 f5       	brne	.+102    	; 0x3e6 <PcdComMF522+0x13e>
+				n = ReadRawRC(FIFOLevelReg);
+ 380:	8a e0       	ldi	r24, 0x0A	; 10
+ 382:	0e 94 d9 00 	call	0x1b2	; 0x1b2 <ReadRawRC>
+ 386:	18 2f       	mov	r17, r24
+				lastBits = ReadRawRC(ControlReg) & 0x07;
+ 388:	8c e0       	ldi	r24, 0x0C	; 12
+ 38a:	0e 94 d9 00 	call	0x1b2	; 0x1b2 <ReadRawRC>
+ 38e:	48 2f       	mov	r20, r24
+ 390:	47 70       	andi	r20, 0x07	; 7
+				if (lastBits) {   
+ 392:	09 f4       	brne	.+2      	; 0x396 <PcdComMF522+0xee>
+ 394:	54 c0       	rjmp	.+168    	; 0x43e <PcdComMF522+0x196>
+					*pOutLenBit = (n-1)*8 + lastBits;   
+ 396:	21 2f       	mov	r18, r17
+ 398:	30 e0       	ldi	r19, 0x00	; 0
+ 39a:	c9 01       	movw	r24, r18
+ 39c:	01 97       	sbiw	r24, 0x01	; 1
+ 39e:	88 0f       	add	r24, r24
+ 3a0:	99 1f       	adc	r25, r25
+ 3a2:	88 0f       	add	r24, r24
+ 3a4:	99 1f       	adc	r25, r25
+ 3a6:	88 0f       	add	r24, r24
+ 3a8:	99 1f       	adc	r25, r25
+ 3aa:	84 0f       	add	r24, r20
+ 3ac:	91 1d       	adc	r25, r1
+ 3ae:	f3 01       	movw	r30, r6
+ 3b0:	91 83       	std	Z+1, r25	; 0x01
+ 3b2:	80 83       	st	Z, r24
+				} else {   
+					*pOutLenBit = n*8;   
+				}
+				if (n == 0) {   
+ 3b4:	11 23       	and	r17, r17
+ 3b6:	09 f0       	breq	.+2      	; 0x3ba <PcdComMF522+0x112>
+ 3b8:	4f c0       	rjmp	.+158    	; 0x458 <PcdComMF522+0x1b0>
+ 3ba:	01 e0       	ldi	r16, 0x01	; 1
+ 3bc:	10 e0       	ldi	r17, 0x00	; 0
+					n = 1;    
+				}
+				if (n > MAXRLEN) {   
+ 3be:	c0 e0       	ldi	r28, 0x00	; 0
+ 3c0:	d0 e0       	ldi	r29, 0x00	; 0
+					n = MAXRLEN;   
+				}
+				for (i=0; i<n; i++) {   
+					pOutData[i] = ReadRawRC(FIFODataReg);    
+ 3c2:	89 e0       	ldi	r24, 0x09	; 9
+ 3c4:	0e 94 d9 00 	call	0x1b2	; 0x1b2 <ReadRawRC>
+ 3c8:	f4 01       	movw	r30, r8
+ 3ca:	ec 0f       	add	r30, r28
+ 3cc:	fd 1f       	adc	r31, r29
+ 3ce:	80 83       	st	Z, r24
+					n = 1;    
+				}
+				if (n > MAXRLEN) {   
+					n = MAXRLEN;   
+				}
+				for (i=0; i<n; i++) {   
+ 3d0:	21 96       	adiw	r28, 0x01	; 1
+ 3d2:	c0 17       	cp	r28, r16
+ 3d4:	d1 07       	cpc	r29, r17
+ 3d6:	a8 f3       	brcs	.-22     	; 0x3c2 <PcdComMF522+0x11a>
+ 3d8:	06 c0       	rjmp	.+12     	; 0x3e6 <PcdComMF522+0x13e>
+	do 
+	{
+		n = ReadRawRC(ComIrqReg);
+		i--;
+	} while ((i!=0) && !(n&0x01) && !(n&waitFor));
+	ClearBitMask(BitFramingReg,0x80);
+ 3da:	8d e0       	ldi	r24, 0x0D	; 13
+ 3dc:	60 e8       	ldi	r22, 0x80	; 128
+ 3de:	0e 94 f0 00 	call	0x1e0	; 0x1e0 <ClearBitMask>
+ 3e2:	8e ef       	ldi	r24, 0xFE	; 254
+ 3e4:	f8 2e       	mov	r15, r24
+			status = MI_ERR;   
+		}
+
+	}
+
+	SetBitMask(ControlReg,0x80);           // stop timer now
+ 3e6:	8c e0       	ldi	r24, 0x0C	; 12
+ 3e8:	60 e8       	ldi	r22, 0x80	; 128
+ 3ea:	0e 94 ff 00 	call	0x1fe	; 0x1fe <SetBitMask>
+	WriteRawRC(CommandReg,PCD_IDLE); 
+ 3ee:	81 e0       	ldi	r24, 0x01	; 1
+ 3f0:	60 e0       	ldi	r22, 0x00	; 0
+ 3f2:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <WriteRawRC>
+	return status;
+}
+ 3f6:	8f 2d       	mov	r24, r15
+ 3f8:	df 91       	pop	r29
+ 3fa:	cf 91       	pop	r28
+ 3fc:	1f 91       	pop	r17
+ 3fe:	0f 91       	pop	r16
+ 400:	ff 90       	pop	r15
+ 402:	ef 90       	pop	r14
+ 404:	df 90       	pop	r13
+ 406:	cf 90       	pop	r12
+ 408:	bf 90       	pop	r11
+ 40a:	af 90       	pop	r10
+ 40c:	9f 90       	pop	r9
+ 40e:	8f 90       	pop	r8
+ 410:	7f 90       	pop	r7
+ 412:	6f 90       	pop	r6
+ 414:	08 95       	ret
+	uint8 irqEn   = 0x00;
+	uint8 waitFor = 0x00;
+	uint8 lastBits;
+	uint8 n;
+	uint32 i;
+	switch (Command)
+ 416:	77 e7       	ldi	r23, 0x77	; 119
+ 418:	a7 2e       	mov	r10, r23
+ 41a:	60 e3       	ldi	r22, 0x30	; 48
+ 41c:	d6 2e       	mov	r13, r22
+ 41e:	67 ef       	ldi	r22, 0xF7	; 247
+ 420:	61 cf       	rjmp	.-318    	; 0x2e4 <PcdComMF522+0x3c>
+ 422:	f2 e1       	ldi	r31, 0x12	; 18
+ 424:	af 2e       	mov	r10, r31
+ 426:	e0 e1       	ldi	r30, 0x10	; 16
+ 428:	de 2e       	mov	r13, r30
+ 42a:	62 e9       	ldi	r22, 0x92	; 146
+ 42c:	5b cf       	rjmp	.-330    	; 0x2e4 <PcdComMF522+0x3c>
+	ClearBitMask(BitFramingReg,0x80);
+
+	if (i!=0) {    
+		if(!(ReadRawRC(ErrorReg)&0x1B)) {
+			status = MI_OK;
+			if (n & irqEn & 0x01) {   status = MI_NOTAGERR;   }
+ 42e:	ff 24       	eor	r15, r15
+ 430:	fa 94       	dec	r15
+ 432:	a3 cf       	rjmp	.-186    	; 0x37a <PcdComMF522+0xd2>
+		WriteRawRC(FIFODataReg, pInData[i]);    
+	}
+	WriteRawRC(CommandReg, Command);
+
+	if (Command == PCD_TRANSCEIVE) {    
+		SetBitMask(BitFramingReg,0x80);  
+ 434:	8d e0       	ldi	r24, 0x0D	; 13
+ 436:	60 e8       	ldi	r22, 0x80	; 128
+ 438:	0e 94 ff 00 	call	0x1fe	; 0x1fe <SetBitMask>
+ 43c:	7c cf       	rjmp	.-264    	; 0x336 <PcdComMF522+0x8e>
+				n = ReadRawRC(FIFOLevelReg);
+				lastBits = ReadRawRC(ControlReg) & 0x07;
+				if (lastBits) {   
+					*pOutLenBit = (n-1)*8 + lastBits;   
+				} else {   
+					*pOutLenBit = n*8;   
+ 43e:	21 2f       	mov	r18, r17
+ 440:	30 e0       	ldi	r19, 0x00	; 0
+ 442:	c9 01       	movw	r24, r18
+ 444:	88 0f       	add	r24, r24
+ 446:	99 1f       	adc	r25, r25
+ 448:	88 0f       	add	r24, r24
+ 44a:	99 1f       	adc	r25, r25
+ 44c:	88 0f       	add	r24, r24
+ 44e:	99 1f       	adc	r25, r25
+ 450:	f3 01       	movw	r30, r6
+ 452:	91 83       	std	Z+1, r25	; 0x01
+ 454:	80 83       	st	Z, r24
+ 456:	ae cf       	rjmp	.-164    	; 0x3b4 <PcdComMF522+0x10c>
+				}
+				if (n == 0) {   
+					n = 1;    
+				}
+				if (n > MAXRLEN) {   
+ 458:	13 31       	cpi	r17, 0x13	; 19
+ 45a:	18 f0       	brcs	.+6      	; 0x462 <PcdComMF522+0x1ba>
+ 45c:	02 e1       	ldi	r16, 0x12	; 18
+ 45e:	10 e0       	ldi	r17, 0x00	; 0
+ 460:	ae cf       	rjmp	.-164    	; 0x3be <PcdComMF522+0x116>
+ 462:	89 01       	movw	r16, r18
+ 464:	ac cf       	rjmp	.-168    	; 0x3be <PcdComMF522+0x116>
+
+00000466 <PcdRequest>:
+ * 			 0x0800 = Mifare_Pro(X) 
+ * 			 0x4403 = Mifare_DESFire
+ * 返    回：成功返回MI_OK
+ * *****************************************************************/
+char PcdRequest(uint8 req_code,uint8 *pTagType)
+{
+ 466:	ef 92       	push	r14
+ 468:	ff 92       	push	r15
+ 46a:	0f 93       	push	r16
+ 46c:	1f 93       	push	r17
+ 46e:	df 93       	push	r29
+ 470:	cf 93       	push	r28
+ 472:	cd b7       	in	r28, 0x3d	; 61
+ 474:	de b7       	in	r29, 0x3e	; 62
+ 476:	64 97       	sbiw	r28, 0x14	; 20
+ 478:	0f b6       	in	r0, 0x3f	; 63
+ 47a:	f8 94       	cli
+ 47c:	de bf       	out	0x3e, r29	; 62
+ 47e:	0f be       	out	0x3f, r0	; 63
+ 480:	cd bf       	out	0x3d, r28	; 61
+ 482:	18 2f       	mov	r17, r24
+ 484:	7b 01       	movw	r14, r22
+	char status;  
+	uint32 unLen;
+	uint8 ucComMF522Buf[MAXRLEN]; 
+
+	ClearBitMask(Status2Reg,0x08);
+ 486:	88 e0       	ldi	r24, 0x08	; 8
+ 488:	68 e0       	ldi	r22, 0x08	; 8
+ 48a:	0e 94 f0 00 	call	0x1e0	; 0x1e0 <ClearBitMask>
+	WriteRawRC(BitFramingReg,0x07);
+ 48e:	8d e0       	ldi	r24, 0x0D	; 13
+ 490:	67 e0       	ldi	r22, 0x07	; 7
+ 492:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <WriteRawRC>
+	SetBitMask(TxControlReg,0x03);
+ 496:	84 e1       	ldi	r24, 0x14	; 20
+ 498:	63 e0       	ldi	r22, 0x03	; 3
+ 49a:	0e 94 ff 00 	call	0x1fe	; 0x1fe <SetBitMask>
+
+	ucComMF522Buf[0] = req_code;
+ 49e:	1b 83       	std	Y+3, r17	; 0x03
+
+	status = PcdComMF522(PCD_TRANSCEIVE,ucComMF522Buf,1,ucComMF522Buf,&unLen);
+ 4a0:	9e 01       	movw	r18, r28
+ 4a2:	2d 5f       	subi	r18, 0xFD	; 253
+ 4a4:	3f 4f       	sbci	r19, 0xFF	; 255
+ 4a6:	8c e0       	ldi	r24, 0x0C	; 12
+ 4a8:	b9 01       	movw	r22, r18
+ 4aa:	41 e0       	ldi	r20, 0x01	; 1
+ 4ac:	8e 01       	movw	r16, r28
+ 4ae:	0f 5f       	subi	r16, 0xFF	; 255
+ 4b0:	1f 4f       	sbci	r17, 0xFF	; 255
+ 4b2:	0e 94 54 01 	call	0x2a8	; 0x2a8 <PcdComMF522>
+ 4b6:	28 2f       	mov	r18, r24
+
+	if ((status == MI_OK) && (unLen == 0x10)) {    
+ 4b8:	88 23       	and	r24, r24
+ 4ba:	21 f4       	brne	.+8      	; 0x4c4 <PcdRequest+0x5e>
+ 4bc:	89 81       	ldd	r24, Y+1	; 0x01
+ 4be:	9a 81       	ldd	r25, Y+2	; 0x02
+ 4c0:	40 97       	sbiw	r24, 0x10	; 16
+ 4c2:	79 f0       	breq	.+30     	; 0x4e2 <PcdRequest+0x7c>
+ 4c4:	2e ef       	ldi	r18, 0xFE	; 254
+	} else {   
+		status = MI_ERR;   
+	}
+
+	return status;
+}
+ 4c6:	82 2f       	mov	r24, r18
+ 4c8:	64 96       	adiw	r28, 0x14	; 20
+ 4ca:	0f b6       	in	r0, 0x3f	; 63
+ 4cc:	f8 94       	cli
+ 4ce:	de bf       	out	0x3e, r29	; 62
+ 4d0:	0f be       	out	0x3f, r0	; 63
+ 4d2:	cd bf       	out	0x3d, r28	; 61
+ 4d4:	cf 91       	pop	r28
+ 4d6:	df 91       	pop	r29
+ 4d8:	1f 91       	pop	r17
+ 4da:	0f 91       	pop	r16
+ 4dc:	ff 90       	pop	r15
+ 4de:	ef 90       	pop	r14
+ 4e0:	08 95       	ret
+	ucComMF522Buf[0] = req_code;
+
+	status = PcdComMF522(PCD_TRANSCEIVE,ucComMF522Buf,1,ucComMF522Buf,&unLen);
+
+	if ((status == MI_OK) && (unLen == 0x10)) {    
+		*pTagType     = ucComMF522Buf[0];
+ 4e2:	8b 81       	ldd	r24, Y+3	; 0x03
+ 4e4:	f7 01       	movw	r30, r14
+ 4e6:	80 83       	st	Z, r24
+		*(pTagType+1) = ucComMF522Buf[1];
+ 4e8:	8c 81       	ldd	r24, Y+4	; 0x04
+ 4ea:	81 83       	std	Z+1, r24	; 0x01
+ 4ec:	ec cf       	rjmp	.-40     	; 0x4c6 <PcdRequest+0x60>
+
+000004ee <PcdAnticoll>:
+ * 提示说明：
+ * 输    入：pSnr[OUT]:卡片序列号，4字节
+ * 返    回：成功返回MI_OK
+ * *****************************************************************/
+char PcdAnticoll(uint8 *pSnr)
+{
+ 4ee:	ef 92       	push	r14
+ 4f0:	ff 92       	push	r15
+ 4f2:	0f 93       	push	r16
+ 4f4:	1f 93       	push	r17
+ 4f6:	df 93       	push	r29
+ 4f8:	cf 93       	push	r28
+ 4fa:	cd b7       	in	r28, 0x3d	; 61
+ 4fc:	de b7       	in	r29, 0x3e	; 62
+ 4fe:	64 97       	sbiw	r28, 0x14	; 20
+ 500:	0f b6       	in	r0, 0x3f	; 63
+ 502:	f8 94       	cli
+ 504:	de bf       	out	0x3e, r29	; 62
+ 506:	0f be       	out	0x3f, r0	; 63
+ 508:	cd bf       	out	0x3d, r28	; 61
+ 50a:	7c 01       	movw	r14, r24
+	uint8 i,snr_check=0;
+	uint32 unLen;
+	uint8 ucComMF522Buf[MAXRLEN]; 
+
+
+	ClearBitMask(Status2Reg,0x08);
+ 50c:	88 e0       	ldi	r24, 0x08	; 8
+ 50e:	68 e0       	ldi	r22, 0x08	; 8
+ 510:	0e 94 f0 00 	call	0x1e0	; 0x1e0 <ClearBitMask>
+	WriteRawRC(BitFramingReg,0x00);
+ 514:	8d e0       	ldi	r24, 0x0D	; 13
+ 516:	60 e0       	ldi	r22, 0x00	; 0
+ 518:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <WriteRawRC>
+	ClearBitMask(CollReg,0x80);
+ 51c:	8e e0       	ldi	r24, 0x0E	; 14
+ 51e:	60 e8       	ldi	r22, 0x80	; 128
+ 520:	0e 94 f0 00 	call	0x1e0	; 0x1e0 <ClearBitMask>
+
+	ucComMF522Buf[0] = PICC_ANTICOLL1;
+ 524:	83 e9       	ldi	r24, 0x93	; 147
+ 526:	8b 83       	std	Y+3, r24	; 0x03
+	ucComMF522Buf[1] = 0x20;
+ 528:	80 e2       	ldi	r24, 0x20	; 32
+ 52a:	8c 83       	std	Y+4, r24	; 0x04
+
+	status = PcdComMF522(PCD_TRANSCEIVE,ucComMF522Buf,2,ucComMF522Buf,&unLen);
+ 52c:	9e 01       	movw	r18, r28
+ 52e:	2d 5f       	subi	r18, 0xFD	; 253
+ 530:	3f 4f       	sbci	r19, 0xFF	; 255
+ 532:	8c e0       	ldi	r24, 0x0C	; 12
+ 534:	b9 01       	movw	r22, r18
+ 536:	42 e0       	ldi	r20, 0x02	; 2
+ 538:	8e 01       	movw	r16, r28
+ 53a:	0f 5f       	subi	r16, 0xFF	; 255
+ 53c:	1f 4f       	sbci	r17, 0xFF	; 255
+ 53e:	0e 94 54 01 	call	0x2a8	; 0x2a8 <PcdComMF522>
+ 542:	18 2f       	mov	r17, r24
+
+	if (status == MI_OK) {
+ 544:	88 23       	and	r24, r24
+ 546:	79 f4       	brne	.+30     	; 0x566 <__stack+0x67>
+		for (i=0; i<4; i++) {   
+			*(pSnr+i)  = ucComMF522Buf[i];
+ 548:	8b 81       	ldd	r24, Y+3	; 0x03
+ 54a:	f7 01       	movw	r30, r14
+ 54c:	80 83       	st	Z, r24
+ 54e:	2c 81       	ldd	r18, Y+4	; 0x04
+ 550:	21 83       	std	Z+1, r18	; 0x01
+ 552:	9d 81       	ldd	r25, Y+5	; 0x05
+ 554:	92 83       	std	Z+2, r25	; 0x02
+			snr_check ^= ucComMF522Buf[i];
+ 556:	82 27       	eor	r24, r18
+ 558:	89 27       	eor	r24, r25
+
+	status = PcdComMF522(PCD_TRANSCEIVE,ucComMF522Buf,2,ucComMF522Buf,&unLen);
+
+	if (status == MI_OK) {
+		for (i=0; i<4; i++) {   
+			*(pSnr+i)  = ucComMF522Buf[i];
+ 55a:	9e 81       	ldd	r25, Y+6	; 0x06
+ 55c:	93 83       	std	Z+3, r25	; 0x03
+			snr_check ^= ucComMF522Buf[i];
+		}
+		if (snr_check != ucComMF522Buf[i]) {   
+ 55e:	89 27       	eor	r24, r25
+ 560:	9f 81       	ldd	r25, Y+7	; 0x07
+ 562:	89 13       	cpse	r24, r25
+ 564:	1e ef       	ldi	r17, 0xFE	; 254
+			status = MI_ERR;    
+		}
+	}
+
+	SetBitMask(CollReg,0x80);
+ 566:	8e e0       	ldi	r24, 0x0E	; 14
+ 568:	60 e8       	ldi	r22, 0x80	; 128
+ 56a:	0e 94 ff 00 	call	0x1fe	; 0x1fe <SetBitMask>
+	return status;
+}
+ 56e:	81 2f       	mov	r24, r17
+ 570:	64 96       	adiw	r28, 0x14	; 20
+ 572:	0f b6       	in	r0, 0x3f	; 63
+ 574:	f8 94       	cli
+ 576:	de bf       	out	0x3e, r29	; 62
+ 578:	0f be       	out	0x3f, r0	; 63
+ 57a:	cd bf       	out	0x3d, r28	; 61
+ 57c:	cf 91       	pop	r28
+ 57e:	df 91       	pop	r29
+ 580:	1f 91       	pop	r17
+ 582:	0f 91       	pop	r16
+ 584:	ff 90       	pop	r15
+ 586:	ef 90       	pop	r14
+ 588:	08 95       	ret
+
+0000058a <PcdSelect>:
+ * 提示说明：
+ * 输    入：pSnr[IN]:卡片序列号，4字节
+ * 返    回：成功返回MI_OK
+ * *****************************************************************/
+char PcdSelect(uint8 *pSnr)
+{
+ 58a:	0f 93       	push	r16
+ 58c:	1f 93       	push	r17
+ 58e:	df 93       	push	r29
+ 590:	cf 93       	push	r28
+ 592:	cd b7       	in	r28, 0x3d	; 61
+ 594:	de b7       	in	r29, 0x3e	; 62
+ 596:	64 97       	sbiw	r28, 0x14	; 20
+ 598:	0f b6       	in	r0, 0x3f	; 63
+ 59a:	f8 94       	cli
+ 59c:	de bf       	out	0x3e, r29	; 62
+ 59e:	0f be       	out	0x3f, r0	; 63
+ 5a0:	cd bf       	out	0x3d, r28	; 61
+	char status;
+	uint8 i;
+	uint32 unLen;
+	uint8 ucComMF522Buf[MAXRLEN]; 
+
+	ucComMF522Buf[0] = PICC_ANTICOLL1;
+ 5a2:	23 e9       	ldi	r18, 0x93	; 147
+ 5a4:	2b 83       	std	Y+3, r18	; 0x03
+	ucComMF522Buf[1] = 0x70;
+ 5a6:	20 e7       	ldi	r18, 0x70	; 112
+ 5a8:	2c 83       	std	Y+4, r18	; 0x04
+	ucComMF522Buf[6] = 0;
+ 5aa:	19 86       	std	Y+9, r1	; 0x09
+ 5ac:	dc 01       	movw	r26, r24
+ 5ae:	fe 01       	movw	r30, r28
+ 5b0:	35 96       	adiw	r30, 0x05	; 5
+ 5b2:	8e 01       	movw	r16, r28
+ 5b4:	0d 5f       	subi	r16, 0xFD	; 253
+ 5b6:	1f 4f       	sbci	r17, 0xFF	; 255
+ 5b8:	9e 01       	movw	r18, r28
+ 5ba:	27 5f       	subi	r18, 0xF7	; 247
+ 5bc:	3f 4f       	sbci	r19, 0xFF	; 255
+	for (i=0; i<4; i++)
+	{
+		ucComMF522Buf[i+2] = *(pSnr+i);
+ 5be:	8c 91       	ld	r24, X
+ 5c0:	81 93       	st	Z+, r24
+		ucComMF522Buf[6]  ^= *(pSnr+i);
+ 5c2:	89 85       	ldd	r24, Y+9	; 0x09
+ 5c4:	9d 91       	ld	r25, X+
+ 5c6:	89 27       	eor	r24, r25
+ 5c8:	89 87       	std	Y+9, r24	; 0x09
+	uint8 ucComMF522Buf[MAXRLEN]; 
+
+	ucComMF522Buf[0] = PICC_ANTICOLL1;
+	ucComMF522Buf[1] = 0x70;
+	ucComMF522Buf[6] = 0;
+	for (i=0; i<4; i++)
+ 5ca:	e2 17       	cp	r30, r18
+ 5cc:	f3 07       	cpc	r31, r19
+ 5ce:	b9 f7       	brne	.-18     	; 0x5be <PcdSelect+0x34>
+	{
+		ucComMF522Buf[i+2] = *(pSnr+i);
+		ucComMF522Buf[6]  ^= *(pSnr+i);
+	}
+	CalulateCRC(ucComMF522Buf,7,&ucComMF522Buf[7]);
+ 5d0:	c8 01       	movw	r24, r16
+ 5d2:	67 e0       	ldi	r22, 0x07	; 7
+ 5d4:	ae 01       	movw	r20, r28
+ 5d6:	46 5f       	subi	r20, 0xF6	; 246
+ 5d8:	5f 4f       	sbci	r21, 0xFF	; 255
+ 5da:	0e 94 0d 01 	call	0x21a	; 0x21a <CalulateCRC>
+
+	ClearBitMask(Status2Reg,0x08);
+ 5de:	88 e0       	ldi	r24, 0x08	; 8
+ 5e0:	68 e0       	ldi	r22, 0x08	; 8
+ 5e2:	0e 94 f0 00 	call	0x1e0	; 0x1e0 <ClearBitMask>
+
+	status = PcdComMF522(PCD_TRANSCEIVE,ucComMF522Buf,9,ucComMF522Buf,&unLen);
+ 5e6:	8c e0       	ldi	r24, 0x0C	; 12
+ 5e8:	b8 01       	movw	r22, r16
+ 5ea:	49 e0       	ldi	r20, 0x09	; 9
+ 5ec:	98 01       	movw	r18, r16
+ 5ee:	8e 01       	movw	r16, r28
+ 5f0:	0f 5f       	subi	r16, 0xFF	; 255
+ 5f2:	1f 4f       	sbci	r17, 0xFF	; 255
+ 5f4:	0e 94 54 01 	call	0x2a8	; 0x2a8 <PcdComMF522>
+ 5f8:	28 2f       	mov	r18, r24
+
+	if ((status == MI_OK) && (unLen == 0x18)) {   
+ 5fa:	88 23       	and	r24, r24
+ 5fc:	69 f0       	breq	.+26     	; 0x618 <PcdSelect+0x8e>
+ 5fe:	2e ef       	ldi	r18, 0xFE	; 254
+	} else {   
+		status = MI_ERR;    
+	}
+
+	return status;
+}
+ 600:	82 2f       	mov	r24, r18
+ 602:	64 96       	adiw	r28, 0x14	; 20
+ 604:	0f b6       	in	r0, 0x3f	; 63
+ 606:	f8 94       	cli
+ 608:	de bf       	out	0x3e, r29	; 62
+ 60a:	0f be       	out	0x3f, r0	; 63
+ 60c:	cd bf       	out	0x3d, r28	; 61
+ 60e:	cf 91       	pop	r28
+ 610:	df 91       	pop	r29
+ 612:	1f 91       	pop	r17
+ 614:	0f 91       	pop	r16
+ 616:	08 95       	ret
+
+	ClearBitMask(Status2Reg,0x08);
+
+	status = PcdComMF522(PCD_TRANSCEIVE,ucComMF522Buf,9,ucComMF522Buf,&unLen);
+
+	if ((status == MI_OK) && (unLen == 0x18)) {   
+ 618:	89 81       	ldd	r24, Y+1	; 0x01
+ 61a:	9a 81       	ldd	r25, Y+2	; 0x02
+ 61c:	48 97       	sbiw	r24, 0x18	; 24
+ 61e:	79 f7       	brne	.-34     	; 0x5fe <PcdSelect+0x74>
+ 620:	ef cf       	rjmp	.-34     	; 0x600 <PcdSelect+0x76>
+
+00000622 <PcdReset>:
+ * 提示说明：
+ * 输    入：
+ * 返    回：成功返回MI_OK
+ * *****************************************************************/
+char PcdReset(void)
+{
+ 622:	1f 93       	push	r17
+	SET_RC522RST;
+ 624:	ad 9a       	sbi	0x15, 5	; 21
+ 626:	1a e1       	ldi	r17, 0x1A	; 26
+ 628:	81 2f       	mov	r24, r17
+ 62a:	8a 95       	dec	r24
+ 62c:	f1 f7       	brne	.-4      	; 0x62a <PcdReset+0x8>
+	delay_ns(10);
+	CLR_RC522RST;
+ 62e:	ad 98       	cbi	0x15, 5	; 21
+ 630:	81 2f       	mov	r24, r17
+ 632:	8a 95       	dec	r24
+ 634:	f1 f7       	brne	.-4      	; 0x632 <PcdReset+0x10>
+	delay_ns(10);
+	SET_RC522RST;
+ 636:	ad 9a       	sbi	0x15, 5	; 21
+ 638:	81 2f       	mov	r24, r17
+ 63a:	8a 95       	dec	r24
+ 63c:	f1 f7       	brne	.-4      	; 0x63a <PcdReset+0x18>
+	delay_ns(10);
+	WriteRawRC(CommandReg,PCD_RESETPHASE);
+ 63e:	81 e0       	ldi	r24, 0x01	; 1
+ 640:	6f e0       	ldi	r22, 0x0F	; 15
+ 642:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <WriteRawRC>
+ 646:	1a 95       	dec	r17
+ 648:	f1 f7       	brne	.-4      	; 0x646 <PcdReset+0x24>
+	delay_ns(10);
+
+	WriteRawRC(ModeReg,0x3D);            //和Mifare卡通讯，CRC初始值0x6363
+ 64a:	81 e1       	ldi	r24, 0x11	; 17
+ 64c:	6d e3       	ldi	r22, 0x3D	; 61
+ 64e:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <WriteRawRC>
+	WriteRawRC(TReloadRegL,30);           
+ 652:	8d e2       	ldi	r24, 0x2D	; 45
+ 654:	6e e1       	ldi	r22, 0x1E	; 30
+ 656:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <WriteRawRC>
+	WriteRawRC(TReloadRegH,0);
+ 65a:	8c e2       	ldi	r24, 0x2C	; 44
+ 65c:	60 e0       	ldi	r22, 0x00	; 0
+ 65e:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <WriteRawRC>
+	WriteRawRC(TModeReg,0x8D);
+ 662:	8a e2       	ldi	r24, 0x2A	; 42
+ 664:	6d e8       	ldi	r22, 0x8D	; 141
+ 666:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <WriteRawRC>
+	WriteRawRC(TPrescalerReg,0x3E);
+ 66a:	8b e2       	ldi	r24, 0x2B	; 43
+ 66c:	6e e3       	ldi	r22, 0x3E	; 62
+ 66e:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <WriteRawRC>
+
+	WriteRawRC(TxAutoReg,0x40);//必须要
+ 672:	85 e1       	ldi	r24, 0x15	; 21
+ 674:	60 e4       	ldi	r22, 0x40	; 64
+ 676:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <WriteRawRC>
+
+	return MI_OK;
+}
+ 67a:	80 e0       	ldi	r24, 0x00	; 0
+ 67c:	1f 91       	pop	r17
+ 67e:	08 95       	ret
+
+00000680 <PcdAntennaOn>:
+ * 返    回：
+ * *****************************************************************/
+void PcdAntennaOn(void)
+{
+	uint8 i;
+	i = ReadRawRC(TxControlReg);
+ 680:	84 e1       	ldi	r24, 0x14	; 20
+ 682:	0e 94 d9 00 	call	0x1b2	; 0x1b2 <ReadRawRC>
+	if (!(i & 0x03))
+ 686:	90 e0       	ldi	r25, 0x00	; 0
+ 688:	83 70       	andi	r24, 0x03	; 3
+ 68a:	90 70       	andi	r25, 0x00	; 0
+ 68c:	89 2b       	or	r24, r25
+ 68e:	09 f0       	breq	.+2      	; 0x692 <PcdAntennaOn+0x12>
+ 690:	08 95       	ret
+	{
+		SetBitMask(TxControlReg, 0x03);
+ 692:	84 e1       	ldi	r24, 0x14	; 20
+ 694:	63 e0       	ldi	r22, 0x03	; 3
+ 696:	0e 94 ff 00 	call	0x1fe	; 0x1fe <SetBitMask>
+ 69a:	08 95       	ret
+
+0000069c <M500PcdConfigISOType>:
+ * 输    入：
+ * 返    回：
+ * *****************************************************************/
+char M500PcdConfigISOType(uint8 type)
+{
+	if (type == 'A')                     //ISO14443_A
+ 69c:	81 34       	cpi	r24, 0x41	; 65
+ 69e:	11 f0       	breq	.+4      	; 0x6a4 <M500PcdConfigISOType+0x8>
+ 6a0:	8f ef       	ldi	r24, 0xFF	; 255
+ 6a2:	08 95       	ret
+	{ 
+		ClearBitMask(Status2Reg,0x08);
+ 6a4:	88 e0       	ldi	r24, 0x08	; 8
+ 6a6:	68 e0       	ldi	r22, 0x08	; 8
+ 6a8:	0e 94 f0 00 	call	0x1e0	; 0x1e0 <ClearBitMask>
+		WriteRawRC(ModeReg,0x3D);//3F
+ 6ac:	81 e1       	ldi	r24, 0x11	; 17
+ 6ae:	6d e3       	ldi	r22, 0x3D	; 61
+ 6b0:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <WriteRawRC>
+		WriteRawRC(RxSelReg,0x86);//84
+ 6b4:	87 e1       	ldi	r24, 0x17	; 23
+ 6b6:	66 e8       	ldi	r22, 0x86	; 134
+ 6b8:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <WriteRawRC>
+		WriteRawRC(RFCfgReg,0x7F);   //4F
+ 6bc:	86 e2       	ldi	r24, 0x26	; 38
+ 6be:	6f e7       	ldi	r22, 0x7F	; 127
+ 6c0:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <WriteRawRC>
+		WriteRawRC(TReloadRegL,30);//tmoLength);// TReloadVal = 'h6a =tmoLength(dec) 
+ 6c4:	8d e2       	ldi	r24, 0x2D	; 45
+ 6c6:	6e e1       	ldi	r22, 0x1E	; 30
+ 6c8:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <WriteRawRC>
+		WriteRawRC(TReloadRegH,0);
+ 6cc:	8c e2       	ldi	r24, 0x2C	; 44
+ 6ce:	60 e0       	ldi	r22, 0x00	; 0
+ 6d0:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <WriteRawRC>
+		WriteRawRC(TModeReg,0x8D);
+ 6d4:	8a e2       	ldi	r24, 0x2A	; 42
+ 6d6:	6d e8       	ldi	r22, 0x8D	; 141
+ 6d8:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <WriteRawRC>
+		WriteRawRC(TPrescalerReg,0x3E);
+ 6dc:	8b e2       	ldi	r24, 0x2B	; 43
+ 6de:	6e e3       	ldi	r22, 0x3E	; 62
+ 6e0:	0e 94 e3 00 	call	0x1c6	; 0x1c6 <WriteRawRC>
+    milliseconds can be achieved.
+ */
+void
+_delay_loop_2(uint16_t __count)
+{
+	__asm__ volatile (
+ 6e4:	80 ed       	ldi	r24, 0xD0	; 208
+ 6e6:	97 e0       	ldi	r25, 0x07	; 7
+ 6e8:	01 97       	sbiw	r24, 0x01	; 1
+ 6ea:	f1 f7       	brne	.-4      	; 0x6e8 <M500PcdConfigISOType+0x4c>
+		delay_ns(1000);
+		PcdAntennaOn();
+ 6ec:	0e 94 40 03 	call	0x680	; 0x680 <PcdAntennaOn>
+ 6f0:	80 e0       	ldi	r24, 0x00	; 0
+	}
+	else{ return -1; }
+
+	return MI_OK;
+}
+ 6f2:	08 95       	ret
+
+000006f4 <PcdAntennaOff>:
+ * 输    入：
+ * 返    回：
+ * *****************************************************************/
+void PcdAntennaOff(void)
+{
+	ClearBitMask(TxControlReg, 0x03);
+ 6f4:	84 e1       	ldi	r24, 0x14	; 20
+ 6f6:	63 e0       	ldi	r22, 0x03	; 3
+ 6f8:	0e 94 f0 00 	call	0x1e0	; 0x1e0 <ClearBitMask>
+}
+ 6fc:	08 95       	ret
+
+000006fe <init_rc522_port>:
+ * 输    入：
+ * 返    回：
+ * *****************************************************************/
+void init_rc522_port( void )
+{
+	DDRC |= ( BIT0 | BIT1 | BIT2 );	
+ 6fe:	84 b3       	in	r24, 0x14	; 20
+ 700:	87 60       	ori	r24, 0x07	; 7
+ 702:	84 bb       	out	0x14, r24	; 20
+	DDRC |= BIT5;
+ 704:	a5 9a       	sbi	0x14, 5	; 20
+	DDRC &= ~BIT3;
+ 706:	a3 98       	cbi	0x14, 3	; 20
+}
+ 708:	08 95       	ret
+
+0000070a <init_rc522>:
+ * 输    入：
+ * 返    回：
+ * *****************************************************************/
+void init_rc522(void)
+{
+	init_rc522_port();
+ 70a:	0e 94 7f 03 	call	0x6fe	; 0x6fe <init_rc522_port>
+	PcdReset();
+ 70e:	0e 94 11 03 	call	0x622	; 0x622 <PcdReset>
+	PcdAntennaOff();  
+ 712:	0e 94 7a 03 	call	0x6f4	; 0x6f4 <PcdAntennaOff>
+	PcdAntennaOn();
+ 716:	0e 94 40 03 	call	0x680	; 0x680 <PcdAntennaOn>
+	M500PcdConfigISOType( 'A' );
+ 71a:	81 e4       	ldi	r24, 0x41	; 65
+ 71c:	0e 94 4e 03 	call	0x69c	; 0x69c <M500PcdConfigISOType>
+}
+ 720:	08 95       	ret
+
+00000722 <getRFID>:
+
+uint8 getRFID(uint8* str)
+{
+ 722:	cf 93       	push	r28
+ 724:	df 93       	push	r29
+ 726:	ec 01       	movw	r28, r24
+	if( PcdRequest( PICC_REQIDL, str ) != MI_OK ){
+ 728:	86 e2       	ldi	r24, 0x26	; 38
+ 72a:	be 01       	movw	r22, r28
+ 72c:	0e 94 33 02 	call	0x466	; 0x466 <PcdRequest>
+ 730:	88 23       	and	r24, r24
+ 732:	31 f0       	breq	.+12     	; 0x740 <getRFID+0x1e>
+		//寻天线区内未进入休眠状态的卡，返回卡片类型 2字节
+		if( PcdRequest( PICC_REQIDL,str ) != MI_OK ){
+ 734:	86 e2       	ldi	r24, 0x26	; 38
+ 736:	be 01       	movw	r22, r28
+ 738:	0e 94 33 02 	call	0x466	; 0x466 <PcdRequest>
+ 73c:	88 23       	and	r24, r24
+ 73e:	29 f4       	brne	.+10     	; 0x74a <getRFID+0x28>
+			//寻天线区内未进入休眠状态的卡，返回卡片类型 2字节
+			return 0;
+		}
+	}
+	if( PcdAnticoll( str ) != MI_OK ) {
+ 740:	ce 01       	movw	r24, r28
+ 742:	0e 94 77 02 	call	0x4ee	; 0x4ee <PcdAnticoll>
+ 746:	88 23       	and	r24, r24
+ 748:	29 f0       	breq	.+10     	; 0x754 <getRFID+0x32>
+		//防冲撞，返回卡的序列号 4字节
+		return 0;//break;
+	}
+	
+	if( PcdSelect( str ) != MI_OK ){//选卡
+ 74a:	90 e0       	ldi	r25, 0x00	; 0
+		return 0;//break;
+	}
+	//...usart
+	return 1;
+}
+ 74c:	89 2f       	mov	r24, r25
+ 74e:	df 91       	pop	r29
+ 750:	cf 91       	pop	r28
+ 752:	08 95       	ret
+	if( PcdAnticoll( str ) != MI_OK ) {
+		//防冲撞，返回卡的序列号 4字节
+		return 0;//break;
+	}
+	
+	if( PcdSelect( str ) != MI_OK ){//选卡
+ 754:	ce 01       	movw	r24, r28
+ 756:	0e 94 c5 02 	call	0x58a	; 0x58a <PcdSelect>
+ 75a:	90 e0       	ldi	r25, 0x00	; 0
+ 75c:	88 23       	and	r24, r24
+ 75e:	b1 f7       	brne	.-20     	; 0x74c <getRFID+0x2a>
+ 760:	91 e0       	ldi	r25, 0x01	; 1
+		return 0;//break;
+	}
+	//...usart
+	return 1;
+}
+ 762:	89 2f       	mov	r24, r25
+ 764:	df 91       	pop	r29
+ 766:	cf 91       	pop	r28
+ 768:	08 95       	ret
+
+0000076a <PcdWrite>:
+ * 输    入：addr[IN]：块地址 
+ * 			 pData[IN]：写入的数据，16字节
+ * 返    回：成功返回MI_OK
+ * *****************************************************************/
+char PcdWrite(uint8 addr,uint8 *pData)
+{
+ 76a:	af 92       	push	r10
+ 76c:	bf 92       	push	r11
+ 76e:	cf 92       	push	r12
+ 770:	df 92       	push	r13
+ 772:	ef 92       	push	r14
+ 774:	ff 92       	push	r15
+ 776:	0f 93       	push	r16
+ 778:	1f 93       	push	r17
+ 77a:	df 93       	push	r29
+ 77c:	cf 93       	push	r28
+ 77e:	cd b7       	in	r28, 0x3d	; 61
+ 780:	de b7       	in	r29, 0x3e	; 62
+ 782:	64 97       	sbiw	r28, 0x14	; 20
+ 784:	0f b6       	in	r0, 0x3f	; 63
+ 786:	f8 94       	cli
+ 788:	de bf       	out	0x3e, r29	; 62
+ 78a:	0f be       	out	0x3f, r0	; 63
+ 78c:	cd bf       	out	0x3d, r28	; 61
+ 78e:	b6 2e       	mov	r11, r22
+ 790:	a7 2e       	mov	r10, r23
+	char status;
+	uint32 unLen;
+	uint8 ucComMF522Buf[MAXRLEN]; 
+
+	ucComMF522Buf[0] = PICC_WRITE;
+ 792:	90 ea       	ldi	r25, 0xA0	; 160
+ 794:	9b 83       	std	Y+3, r25	; 0x03
+	ucComMF522Buf[1] = addr;
+ 796:	8c 83       	std	Y+4, r24	; 0x04
+	CalulateCRC(ucComMF522Buf,2,&ucComMF522Buf[2]);
+ 798:	a3 e0       	ldi	r26, 0x03	; 3
+ 79a:	ea 2e       	mov	r14, r26
+ 79c:	f1 2c       	mov	r15, r1
+ 79e:	ec 0e       	add	r14, r28
+ 7a0:	fd 1e       	adc	r15, r29
+ 7a2:	c7 01       	movw	r24, r14
+ 7a4:	62 e0       	ldi	r22, 0x02	; 2
+ 7a6:	ae 01       	movw	r20, r28
+ 7a8:	4b 5f       	subi	r20, 0xFB	; 251
+ 7aa:	5f 4f       	sbci	r21, 0xFF	; 255
+ 7ac:	0e 94 0d 01 	call	0x21a	; 0x21a <CalulateCRC>
+
+	status = PcdComMF522(PCD_TRANSCEIVE,ucComMF522Buf,4,ucComMF522Buf,&unLen);
+ 7b0:	8c e0       	ldi	r24, 0x0C	; 12
+ 7b2:	b7 01       	movw	r22, r14
+ 7b4:	44 e0       	ldi	r20, 0x04	; 4
+ 7b6:	97 01       	movw	r18, r14
+ 7b8:	6e 01       	movw	r12, r28
+ 7ba:	08 94       	sec
+ 7bc:	c1 1c       	adc	r12, r1
+ 7be:	d1 1c       	adc	r13, r1
+ 7c0:	86 01       	movw	r16, r12
+ 7c2:	0e 94 54 01 	call	0x2a8	; 0x2a8 <PcdComMF522>
+
+	if ((status != MI_OK) || (unLen != 4) || ((ucComMF522Buf[0] & 0x0F) != 0x0A))
+ 7c6:	88 23       	and	r24, r24
+ 7c8:	21 f4       	brne	.+8      	; 0x7d2 <PcdWrite+0x68>
+ 7ca:	89 81       	ldd	r24, Y+1	; 0x01
+ 7cc:	9a 81       	ldd	r25, Y+2	; 0x02
+ 7ce:	04 97       	sbiw	r24, 0x04	; 4
+ 7d0:	99 f0       	breq	.+38     	; 0x7f8 <PcdWrite+0x8e>
+	{
+		memcpy(ucComMF522Buf, pData, 16);
+		CalulateCRC(ucComMF522Buf,16,&ucComMF522Buf[16]);
+
+		status = PcdComMF522(PCD_TRANSCEIVE,ucComMF522Buf,18,ucComMF522Buf,&unLen);
+		if ((status != MI_OK) || (unLen != 4) || ((ucComMF522Buf[0] & 0x0F) != 0x0A))
+ 7d2:	2e ef       	ldi	r18, 0xFE	; 254
+			status = MI_ERR;   
+		}
+	}
+
+	return status;
+}
+ 7d4:	82 2f       	mov	r24, r18
+ 7d6:	64 96       	adiw	r28, 0x14	; 20
+ 7d8:	0f b6       	in	r0, 0x3f	; 63
+ 7da:	f8 94       	cli
+ 7dc:	de bf       	out	0x3e, r29	; 62
+ 7de:	0f be       	out	0x3f, r0	; 63
+ 7e0:	cd bf       	out	0x3d, r28	; 61
+ 7e2:	cf 91       	pop	r28
+ 7e4:	df 91       	pop	r29
+ 7e6:	1f 91       	pop	r17
+ 7e8:	0f 91       	pop	r16
+ 7ea:	ff 90       	pop	r15
+ 7ec:	ef 90       	pop	r14
+ 7ee:	df 90       	pop	r13
+ 7f0:	cf 90       	pop	r12
+ 7f2:	bf 90       	pop	r11
+ 7f4:	af 90       	pop	r10
+ 7f6:	08 95       	ret
+	ucComMF522Buf[1] = addr;
+	CalulateCRC(ucComMF522Buf,2,&ucComMF522Buf[2]);
+
+	status = PcdComMF522(PCD_TRANSCEIVE,ucComMF522Buf,4,ucComMF522Buf,&unLen);
+
+	if ((status != MI_OK) || (unLen != 4) || ((ucComMF522Buf[0] & 0x0F) != 0x0A))
+ 7f8:	8b 81       	ldd	r24, Y+3	; 0x03
+ 7fa:	8f 70       	andi	r24, 0x0F	; 15
+ 7fc:	8a 30       	cpi	r24, 0x0A	; 10
+ 7fe:	49 f7       	brne	.-46     	; 0x7d2 <PcdWrite+0x68>
+		status = MI_ERR;   
+	}
+
+	if (status == MI_OK)
+	{
+		memcpy(ucComMF522Buf, pData, 16);
+ 800:	d7 01       	movw	r26, r14
+ 802:	8b 2d       	mov	r24, r11
+ 804:	9a 2d       	mov	r25, r10
+ 806:	9c 01       	movw	r18, r24
+ 808:	f9 01       	movw	r30, r18
+ 80a:	80 e1       	ldi	r24, 0x10	; 16
+ 80c:	01 90       	ld	r0, Z+
+ 80e:	0d 92       	st	X+, r0
+ 810:	81 50       	subi	r24, 0x01	; 1
+ 812:	e1 f7       	brne	.-8      	; 0x80c <PcdWrite+0xa2>
+		CalulateCRC(ucComMF522Buf,16,&ucComMF522Buf[16]);
+ 814:	c7 01       	movw	r24, r14
+ 816:	60 e1       	ldi	r22, 0x10	; 16
+ 818:	ae 01       	movw	r20, r28
+ 81a:	4d 5e       	subi	r20, 0xED	; 237
+ 81c:	5f 4f       	sbci	r21, 0xFF	; 255
+ 81e:	0e 94 0d 01 	call	0x21a	; 0x21a <CalulateCRC>
+
+		status = PcdComMF522(PCD_TRANSCEIVE,ucComMF522Buf,18,ucComMF522Buf,&unLen);
+ 822:	8c e0       	ldi	r24, 0x0C	; 12
+ 824:	b7 01       	movw	r22, r14
+ 826:	42 e1       	ldi	r20, 0x12	; 18
+ 828:	97 01       	movw	r18, r14
+ 82a:	86 01       	movw	r16, r12
+ 82c:	0e 94 54 01 	call	0x2a8	; 0x2a8 <PcdComMF522>
+ 830:	28 2f       	mov	r18, r24
+		if ((status != MI_OK) || (unLen != 4) || ((ucComMF522Buf[0] & 0x0F) != 0x0A))
+ 832:	88 23       	and	r24, r24
+ 834:	71 f6       	brne	.-100    	; 0x7d2 <PcdWrite+0x68>
+ 836:	89 81       	ldd	r24, Y+1	; 0x01
+ 838:	9a 81       	ldd	r25, Y+2	; 0x02
+ 83a:	04 97       	sbiw	r24, 0x04	; 4
+ 83c:	51 f6       	brne	.-108    	; 0x7d2 <PcdWrite+0x68>
+ 83e:	8b 81       	ldd	r24, Y+3	; 0x03
+ 840:	8f 70       	andi	r24, 0x0F	; 15
+ 842:	8a 30       	cpi	r24, 0x0A	; 10
+ 844:	31 f6       	brne	.-116    	; 0x7d2 <PcdWrite+0x68>
+ 846:	c6 cf       	rjmp	.-116    	; 0x7d4 <PcdWrite+0x6a>
+
+00000848 <PcdRead>:
+ * 输    入：addr[IN]：块地址 
+ * 			 pData[OUT]：读出的数据，16字节
+ * 返    回：成功返回MI_OK
+ * *****************************************************************/
+char PcdRead(uint8 addr,uint8 *pData)
+{
+ 848:	cf 92       	push	r12
+ 84a:	df 92       	push	r13
+ 84c:	ef 92       	push	r14
+ 84e:	ff 92       	push	r15
+ 850:	0f 93       	push	r16
+ 852:	1f 93       	push	r17
+ 854:	df 93       	push	r29
+ 856:	cf 93       	push	r28
+ 858:	cd b7       	in	r28, 0x3d	; 61
+ 85a:	de b7       	in	r29, 0x3e	; 62
+ 85c:	64 97       	sbiw	r28, 0x14	; 20
+ 85e:	0f b6       	in	r0, 0x3f	; 63
+ 860:	f8 94       	cli
+ 862:	de bf       	out	0x3e, r29	; 62
+ 864:	0f be       	out	0x3f, r0	; 63
+ 866:	cd bf       	out	0x3d, r28	; 61
+ 868:	d6 2e       	mov	r13, r22
+ 86a:	c7 2e       	mov	r12, r23
+	char status;
+	uint32 unLen;
+	uint8 ucComMF522Buf[MAXRLEN]; 
+
+	ucComMF522Buf[0] = PICC_READ;
+ 86c:	90 e3       	ldi	r25, 0x30	; 48
+ 86e:	9b 83       	std	Y+3, r25	; 0x03
+	ucComMF522Buf[1] = addr;
+ 870:	8c 83       	std	Y+4, r24	; 0x04
+	CalulateCRC(ucComMF522Buf,2,&ucComMF522Buf[2]);
+ 872:	b3 e0       	ldi	r27, 0x03	; 3
+ 874:	eb 2e       	mov	r14, r27
+ 876:	f1 2c       	mov	r15, r1
+ 878:	ec 0e       	add	r14, r28
+ 87a:	fd 1e       	adc	r15, r29
+ 87c:	c7 01       	movw	r24, r14
+ 87e:	62 e0       	ldi	r22, 0x02	; 2
+ 880:	ae 01       	movw	r20, r28
+ 882:	4b 5f       	subi	r20, 0xFB	; 251
+ 884:	5f 4f       	sbci	r21, 0xFF	; 255
+ 886:	0e 94 0d 01 	call	0x21a	; 0x21a <CalulateCRC>
+
+	status = PcdComMF522(PCD_TRANSCEIVE,ucComMF522Buf,4,ucComMF522Buf,&unLen);
+ 88a:	8c e0       	ldi	r24, 0x0C	; 12
+ 88c:	b7 01       	movw	r22, r14
+ 88e:	44 e0       	ldi	r20, 0x04	; 4
+ 890:	97 01       	movw	r18, r14
+ 892:	8e 01       	movw	r16, r28
+ 894:	0f 5f       	subi	r16, 0xFF	; 255
+ 896:	1f 4f       	sbci	r17, 0xFF	; 255
+ 898:	0e 94 54 01 	call	0x2a8	; 0x2a8 <PcdComMF522>
+ 89c:	48 2f       	mov	r20, r24
+	if ((status == MI_OK) && (unLen == 0x90)) {   
+ 89e:	88 23       	and	r24, r24
+ 8a0:	29 f4       	brne	.+10     	; 0x8ac <PcdRead+0x64>
+ 8a2:	89 81       	ldd	r24, Y+1	; 0x01
+ 8a4:	9a 81       	ldd	r25, Y+2	; 0x02
+ 8a6:	80 39       	cpi	r24, 0x90	; 144
+ 8a8:	91 05       	cpc	r25, r1
+ 8aa:	89 f0       	breq	.+34     	; 0x8ce <PcdRead+0x86>
+ 8ac:	4e ef       	ldi	r20, 0xFE	; 254
+		memcpy(pData, ucComMF522Buf, 16);   
+	} else {   
+		status = MI_ERR;   
+	}
+	return status;
+}
+ 8ae:	84 2f       	mov	r24, r20
+ 8b0:	64 96       	adiw	r28, 0x14	; 20
+ 8b2:	0f b6       	in	r0, 0x3f	; 63
+ 8b4:	f8 94       	cli
+ 8b6:	de bf       	out	0x3e, r29	; 62
+ 8b8:	0f be       	out	0x3f, r0	; 63
+ 8ba:	cd bf       	out	0x3d, r28	; 61
+ 8bc:	cf 91       	pop	r28
+ 8be:	df 91       	pop	r29
+ 8c0:	1f 91       	pop	r17
+ 8c2:	0f 91       	pop	r16
+ 8c4:	ff 90       	pop	r15
+ 8c6:	ef 90       	pop	r14
+ 8c8:	df 90       	pop	r13
+ 8ca:	cf 90       	pop	r12
+ 8cc:	08 95       	ret
+	ucComMF522Buf[1] = addr;
+	CalulateCRC(ucComMF522Buf,2,&ucComMF522Buf[2]);
+
+	status = PcdComMF522(PCD_TRANSCEIVE,ucComMF522Buf,4,ucComMF522Buf,&unLen);
+	if ((status == MI_OK) && (unLen == 0x90)) {   
+		memcpy(pData, ucComMF522Buf, 16);   
+ 8ce:	8d 2d       	mov	r24, r13
+ 8d0:	9c 2d       	mov	r25, r12
+ 8d2:	9c 01       	movw	r18, r24
+ 8d4:	d9 01       	movw	r26, r18
+ 8d6:	f7 01       	movw	r30, r14
+ 8d8:	80 e1       	ldi	r24, 0x10	; 16
+ 8da:	01 90       	ld	r0, Z+
+ 8dc:	0d 92       	st	X+, r0
+ 8de:	81 50       	subi	r24, 0x01	; 1
+ 8e0:	e1 f7       	brne	.-8      	; 0x8da <PcdRead+0x92>
+ 8e2:	e5 cf       	rjmp	.-54     	; 0x8ae <PcdRead+0x66>
+
+000008e4 <PcdAuthState>:
+ * 			 pKey[IN]：密码 
+ * 			 pSnr[IN]：卡片序列号，4字节
+ * 返    回：成功返回MI_OK
+ * *****************************************************************/
+char PcdAuthState(uint8 auth_mode,uint8 addr,uint8 *pKey,uint8 *pSnr)
+{
+ 8e4:	0f 93       	push	r16
+ 8e6:	1f 93       	push	r17
+ 8e8:	df 93       	push	r29
+ 8ea:	cf 93       	push	r28
+ 8ec:	cd b7       	in	r28, 0x3d	; 61
+ 8ee:	de b7       	in	r29, 0x3e	; 62
+ 8f0:	64 97       	sbiw	r28, 0x14	; 20
+ 8f2:	0f b6       	in	r0, 0x3f	; 63
+ 8f4:	f8 94       	cli
+ 8f6:	de bf       	out	0x3e, r29	; 62
+ 8f8:	0f be       	out	0x3f, r0	; 63
+ 8fa:	cd bf       	out	0x3d, r28	; 61
+ 8fc:	72 2f       	mov	r23, r18
+ 8fe:	13 2f       	mov	r17, r19
+	char status;
+	uint32 unLen;
+	uint8 ucComMF522Buf[MAXRLEN]; 
+
+	ucComMF522Buf[0] = auth_mode;
+ 900:	8b 83       	std	Y+3, r24	; 0x03
+	ucComMF522Buf[1] = addr;
+ 902:	6c 83       	std	Y+4, r22	; 0x04
+	memcpy(&ucComMF522Buf[2], pKey, 6); 
+ 904:	de 01       	movw	r26, r28
+ 906:	15 96       	adiw	r26, 0x05	; 5
+ 908:	fa 01       	movw	r30, r20
+ 90a:	86 e0       	ldi	r24, 0x06	; 6
+ 90c:	01 90       	ld	r0, Z+
+ 90e:	0d 92       	st	X+, r0
+ 910:	81 50       	subi	r24, 0x01	; 1
+ 912:	e1 f7       	brne	.-8      	; 0x90c <PcdAuthState+0x28>
+	memcpy(&ucComMF522Buf[8], pSnr, 6); 
+ 914:	de 01       	movw	r26, r28
+ 916:	1b 96       	adiw	r26, 0x0b	; 11
+ 918:	87 2f       	mov	r24, r23
+ 91a:	91 2f       	mov	r25, r17
+ 91c:	9c 01       	movw	r18, r24
+ 91e:	f9 01       	movw	r30, r18
+ 920:	86 e0       	ldi	r24, 0x06	; 6
+ 922:	01 90       	ld	r0, Z+
+ 924:	0d 92       	st	X+, r0
+ 926:	81 50       	subi	r24, 0x01	; 1
+ 928:	e1 f7       	brne	.-8      	; 0x922 <PcdAuthState+0x3e>
+
+	status = PcdComMF522(PCD_AUTHENT,ucComMF522Buf,12,ucComMF522Buf,&unLen);
+ 92a:	9e 01       	movw	r18, r28
+ 92c:	2d 5f       	subi	r18, 0xFD	; 253
+ 92e:	3f 4f       	sbci	r19, 0xFF	; 255
+ 930:	8e e0       	ldi	r24, 0x0E	; 14
+ 932:	b9 01       	movw	r22, r18
+ 934:	4c e0       	ldi	r20, 0x0C	; 12
+ 936:	8e 01       	movw	r16, r28
+ 938:	0f 5f       	subi	r16, 0xFF	; 255
+ 93a:	1f 4f       	sbci	r17, 0xFF	; 255
+ 93c:	0e 94 54 01 	call	0x2a8	; 0x2a8 <PcdComMF522>
+ 940:	18 2f       	mov	r17, r24
+	if ((status != MI_OK) || (!(ReadRawRC(Status2Reg) & 0x08)))
+ 942:	88 23       	and	r24, r24
+ 944:	69 f0       	breq	.+26     	; 0x960 <PcdAuthState+0x7c>
+ 946:	1e ef       	ldi	r17, 0xFE	; 254
+	{   
+		status = MI_ERR;   
+	}
+
+	return status;
+}
+ 948:	81 2f       	mov	r24, r17
+ 94a:	64 96       	adiw	r28, 0x14	; 20
+ 94c:	0f b6       	in	r0, 0x3f	; 63
+ 94e:	f8 94       	cli
+ 950:	de bf       	out	0x3e, r29	; 62
+ 952:	0f be       	out	0x3f, r0	; 63
+ 954:	cd bf       	out	0x3d, r28	; 61
+ 956:	cf 91       	pop	r28
+ 958:	df 91       	pop	r29
+ 95a:	1f 91       	pop	r17
+ 95c:	0f 91       	pop	r16
+ 95e:	08 95       	ret
+	ucComMF522Buf[1] = addr;
+	memcpy(&ucComMF522Buf[2], pKey, 6); 
+	memcpy(&ucComMF522Buf[8], pSnr, 6); 
+
+	status = PcdComMF522(PCD_AUTHENT,ucComMF522Buf,12,ucComMF522Buf,&unLen);
+	if ((status != MI_OK) || (!(ReadRawRC(Status2Reg) & 0x08)))
+ 960:	88 e0       	ldi	r24, 0x08	; 8
+ 962:	0e 94 d9 00 	call	0x1b2	; 0x1b2 <ReadRawRC>
+ 966:	83 ff       	sbrs	r24, 3
+ 968:	ee cf       	rjmp	.-36     	; 0x946 <PcdAuthState+0x62>
+ 96a:	ee cf       	rjmp	.-36     	; 0x948 <PcdAuthState+0x64>
+
+0000096c <_exit>:
+ 96c:	f8 94       	cli
+
+0000096e <__stop_program>:
+ 96e:	ff cf       	rjmp	.-2      	; 0x96e <__stop_program>
